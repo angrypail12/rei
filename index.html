@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real Estate Investment Calculator</title>
+  <style>
+    /* Basic styles */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #e0f2fe, #dbeafe);
+      min-height: 100vh;
+      color: #1e293b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      color: #1e40af;
+      font-size: 2rem;
+      margin: 0;
+    }
+
+    .subtitle {
+      color: #64748b;
+      margin-top: 5px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 20px;
+    }
+
+    @media (min-width: 768px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+      background: linear-gradient(to right, #dbeafe, #e0e7ff);
+      padding: 15px;
+      border-bottom: 4px solid #3b82f6;
+    }
+
+    .card-header h2 {
+      margin: 0;
+      font-size: 1.25rem;
+      color: #1e40af;
+    }
+
+    .card-content {
+      padding: 20px;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+    }
+
+    .input-group.inline {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+
+    input[type="number"]:focus,
+    input[type="text"]:focus {
+      border-color: #3b82f6;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    .input-with-icon {
+      position: relative;
+    }
+
+    .input-with-icon input {
+      padding-left: 30px;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+    }
+
+    .unit-type {
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .unit-type-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .unit-fields {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+
+    .unit-summary {
+      text-align: right;
+      font-size: 0.9rem;
+      color: #64748b;
+      margin-top: 10px;
+    }
+
+    button {
+      cursor: pointer;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-weight: 500;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    .btn-primary {
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #2563eb;
+    }
+
+    .btn-secondary {
+      background-color: #f1f5f9;
+      color: #64748b;
+      border: 1px solid #e2e8f0;
+    }
+
+    .btn-secondary:hover {
+      background-color: #e2e8f0;
+    }
+
+    .btn-danger {
+      background-color: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
+    .btn-danger:hover {
+      background-color: #fecaca;
+    }
+
+    .btn-icon {
+      width: 30px;
+      height: 30px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .add-unit-btn {
+      width: 100%;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .results-table {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px 10px;
+    }
+
+    .results-label {
+      font-weight: 500;
+    }
+
+    .results-value {
+      text-align: right;
+      font-weight: 600;
+    }
+
+    .positive {
+      color: #059669;
+    }
+
+    .negative {
+      color: #dc2626;
+    }
+
+    .warning {
+      color: #d97706;
+    }
+
+    .highlight {
+      color: #2563eb;
+    }
+
+    .notification {
+      padding: 10px 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      animation: fadeOut 5s forwards;
+    }
+
+    .notification.success {
+      background-color: #d1fae5;
+      color: #047857;
+    }
+
+    .notification.error {
+      background-color: #fee2e2;
+      color: #b91c1c;
+    }
+
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+    
+    .unit-rent-summary {
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .unit-rent-summary h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 1rem;
+      color: #1e40af;
+    }
+
+    .unit-rent-item {
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .unit-rent-label {
+      font-weight: 500;
+    }
+
+    .unit-rent-value {
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🏢 Multi-Family Property Investment Calculator</h1>
+      <p class="subtitle">Make data-driven investment decisions with confidence</p>
+      <div id="notification" class="hidden notification"></div>
+    </header>
+
+    <div class="grid">
+      <!-- Property Details Card -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Property Details</h2>
+        </div>
+        <div class="card-content">
+          <div class="input-group">
+            <label for="property-address">Property Address</label>
+            <input type="text" id="property-address" placeholder="Enter property address">
+          </div>
+          <div class="input-group">
+            <label for="list-price">List Price</label>
+            <div class="input-with-icon">
+              <span class="input-icon">$</span>
+              <input type="text" id="list-price" value="500,000" inputmode="numeric">
+            </div>
+          </div>
+          <div class="input-group inline">
+            <div>
+              <label for="yearly-tax">Yearly Property Tax</label>
+              <div class="input-with-icon">
+                <span class="input-icon">$</span>
+                <input type="text" id="yearly-tax" value="5,000" inputmode="numeric">
+              </div>
+            </div>
+            <div>
+              <label for="renovation-costs">Renovation Costs</label>
+              <div class="input-with-icon">
+                <span class="input-icon">$</span>
+                <input type="text" id="renovation-costs" value="0" inputmode="numeric">
+              </div>
+            </div>
+          </div>
+          <div class="input-group inline">
+            <div>
+              <label for="yearly-insurance">Yearly Insurance</label>
+              <div class="input-with-icon">
+                <span class="input-icon">$</span>
+                <input type="text" id="yearly-insurance" value="2,000" inputmode="numeric">
+              </div>
+            </div>
+            <div>
+              <label for="vacancy-rate">Vacancy Rate (%)</label>
+              <input type="text" id="vacancy-rate" value="0" min="0" max="100" inputmode="numeric">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loan Details Card -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Loan Details</h2>
+        </div>
+        <div class="card-content">
+          <div class="input-group inline">
+            <div>
+              <label for="down-payment">Down Payment (%)</label>
+              <input type="text" id="down-payment" value="25" min="0" max="100" inputmode="numeric">
+            </div>
+            <div>
+              <label for="interest-rate">Interest Rate (%)</label>
+              <input type="text" id="interest-rate" value="7.15" min="0" step="0.01" inputmode="numeric">
+            </div>
+          </div>
+          <div class="input-group inline">
+            <div>
+              <label for="loan-term">Loan Term (years)</label>
+              <input type="text" id="loan-term" value="30" min="1" inputmode="numeric">
+            </div>
+            <div>
+              <label for="break-even-target">Target Break-Even (years)</label>
+              <input type="text" id="break-even-target" value="5" min="1" inputmode="numeric">
+            </div>
+          </div>
+          <div class="input-group inline">
+            <div>
+              <label for="water-sewer-trash">Monthly Water/Sewer/Trash</label>
+              <div class="input-with-icon">
+                <span class="input-icon">$</span>
+                <input type="text" id="water-sewer-trash" value="300" inputmode="numeric">
+              </div>
+              <p style="margin-top: 5px; font-size: 0.8rem; color: #64748b;">Default: $75 per unit</p>
+            </div>
+            <div>
+              <label for="capex">Monthly CapEx</label>
+              <div class="input-with-icon">
+                <span class="input-icon">$</span>
+                <input type="text" id="capex" value="0" inputmode="numeric">
+              </div>
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="repairs-maintenance">Monthly Repairs & Maintenance</label>
+            <div class="input-with-icon">
+              <span class="input-icon">$</span>
+              <input type="text" id="repairs-maintenance" value="100" inputmode="numeric">
+            </div>
+            <p style="margin-top: 5px; font-size: 0.8rem; color: #64748b;">Default: 0.02% of purchase price</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unit Types Card -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Unit Types</h2>
+        </div>
+        <div class="card-content">
+          <div id="unit-types-container">
+            <!-- Unit types will be added here by JavaScript -->
+          </div>
+          <button id="add-unit-type" class="btn-secondary add-unit-btn">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Add Unit Type
+          </button>
+        </div>
+      </div>
+
+      <!-- Results Card -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Investment Analysis Results</h2>
+        </div>
+        <div class="card-content">
+          <div class="results-table">
+            <!-- Rearranged metrics as requested -->
+            <div class="results-label">Cash ROI:</div>
+            <div id="result-cash-roi" class="results-value">0.00%</div>
+
+            <div class="results-label">Yearly Cashflow:</div>
+            <div id="result-yearly-cashflow" class="results-value">$0</div>
+
+            <div class="results-label">Break-Even Point:</div>
+            <div id="result-break-even" class="results-value">0y 0m</div>
+
+            <div class="results-label">Cash Needed:</div>
+            <div id="result-cash-needed" class="results-value highlight">$0</div>
+
+            <div class="results-label">DSCR:</div>
+            <div id="result-dscr" class="results-value">0.00</div>
+
+            <div class="results-label">Cap Rate:</div>
+            <div id="result-cap-rate" class="results-value">0.00%</div>
+
+            <div class="results-label">Max Offer Price:</div>
+            <div id="result-max-offer" class="results-value highlight">$0</div>
+            
+            <!-- Hidden for calculations but removed from display -->
+            <div class="results-label hidden">Monthly Rent:</div>
+            <div id="result-monthly-rent" class="results-value hidden">$0</div>
+
+            <div class="results-label hidden">Monthly Mortgage:</div>
+            <div id="result-monthly-mortgage" class="results-value hidden">$0</div>
+
+            <div class="results-label hidden">Monthly Cashflow:</div>
+            <div id="result-monthly-cashflow" class="results-value hidden">$0</div>
+
+            <div class="results-label hidden">Price Per Unit:</div>
+            <div id="result-price-per-unit" class="results-value hidden">$0</div>
+
+            <div class="results-label hidden">1% Rule:</div>
+            <div id="result-one-percent" class="results-value hidden">0.00%</div>
+          </div>
+          
+          <!-- Add unit rent summary section -->
+          <div id="unit-rent-summary" class="unit-rent-summary">
+            <h3>Unit Rent Summary</h3>
+            <div id="unit-rent-details"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize the calculator
+    document.addEventListener('DOMContentLoaded', function() {
+      // DOM elements
+      const unitTypesContainer = document.getElementById('unit-types-container');
+      const addUnitTypeButton = document.getElementById('add-unit-type');
+      const notification = document.getElementById('notification');
+
+      // Input elements
+      const inputs = {
+        listPrice: document.getElementById('list-price'),
+        yearlyTax: document.getElementById('yearly-tax'),
+        renovationCosts: document.getElementById('renovation-costs'),
+        yearlyInsurance: document.getElementById('yearly-insurance'),
+        vacancyRate: document.getElementById('vacancy-rate'),
+        address: document.getElementById('property-address'),
+        downPayment: document.getElementById('down-payment'),
+        interestRate: document.getElementById('interest-rate'),
+        loanTerm: document.getElementById('loan-term'),
+        breakEvenTarget: document.getElementById('break-even-target'),
+        waterSewerTrash: document.getElementById('water-sewer-trash'),
+        capex: document.getElementById('capex'),
+        repairsMaintenance: document.getElementById('repairs-maintenance')
+      };
+
+      // Result elements
+      const results = {
+        cashNeeded: document.getElementById('result-cash-needed'),
+        monthlyRent: document.getElementById('result-monthly-rent'),
+        monthlyMortgage: document.getElementById('result-monthly-mortgage'),
+        monthlyCashflow: document.getElementById('result-monthly-cashflow'),
+        yearlyCashflow: document.getElementById('result-yearly-cashflow'),
+        cashRoi: document.getElementById('result-cash-roi'),
+        capRate: document.getElementById('result-cap-rate'),
+        dscr: document.getElementById('result-dscr'),
+        breakEven: document.getElementById('result-break-even'),
+        maxOffer: document.getElementById('result-max-offer'),
+        pricePerUnit: document.getElementById('result-price-per-unit'),
+        onePercent: document.getElementById('result-one-percent')
+      };
+
+      // Default unit types
+      const defaultUnitTypes = [
+        { type: 'Type A', count: 2, rent: 1000, beds: 2, baths: 1 },
+        { type: 'Type B', count: 2, rent: 1200, beds: 3, baths: 2 }
+      ];
+
+      // Add number formatting to input fields
+      Object.keys(inputs).forEach(key => {
+        if (key !== 'address') {
+          inputs[key].addEventListener('input', function(e) {
+            // Store the current cursor position
+            const cursorPos = this.selectionStart;
+
+            // Get the value without any non-numeric characters
+            let value = this.value.replace(/[^0-9.]/g, '');
+
+            // Don't allow multiple decimal points
+            const decimalPointCount = (value.match(/\./g) || []).length;
+            if (decimalPointCount > 1) {
+              const firstDecimalIndex = value.indexOf('.');
+              value = value.substring(0, firstDecimalIndex + 1) +
+                     value.substring(firstDecimalIndex + 1).replace(/\./g, '');
+            }
+
+            // Format with commas for thousands
+            if (value !== '') {
+              if (value.includes('.')) {
+                const parts = value.split('.');
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                value = parts.join('.');
+              } else {
+                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+              }
+            }
+
+            // Calculate new cursor position considering added commas
+            const addedChars = value.length - this.value.replace(/,/g, '').length;
+            const newCursorPos = cursorPos + (addedChars > 0 ? 1 : 0);
+
+            // Update the input value
+            this.value = value;
+
+            // Restore cursor position
+            this.setSelectionRange(newCursorPos, newCursorPos);
+
+            // Trigger calculation
+            calculate();
+          });
+
+          // Allow clearing the field completely
+          inputs[key].addEventListener('keydown', function(e) {
+            // If backspace is pressed and all text is selected or cursor is at the beginning
+            if (e.key === 'Backspace' &&
+                (this.selectionStart === 0 && this.selectionEnd === this.value.length ||
+                 this.selectionStart === 0 && this.selectionEnd === 0)) {
+              this.value = '';
+              calculate();
+              e.preventDefault();
+            }
+          });
+        }
+      });
+
+      // Add default unit types
+      defaultUnitTypes.forEach(unitType => addUnitTypeToUI(unitType));
+
+      // Add event listeners
+      addUnitTypeButton.addEventListener('click', function() {
+        // Get letter for next unit type (A, B, C, etc.)
+        const nextLetter = String.fromCharCode(65 + document.querySelectorAll('.unit-type').length);
+        addUnitTypeToUI({ type: `Type ${nextLetter}`, count: 1, rent: 1000, beds: 1, baths: 1 });
+      });
+
+      // Set water/sewer/trash based on unit count
+      const totalUnits = defaultUnitTypes.reduce((sum, unit) => sum + unit.count, 0);
+      inputs.waterSewerTrash.value = formatNumber(totalUnits * 75);
+
+      // Initial calculation
+      calculate();
+
+      // Check URL parameters for data from Chrome extension
+      checkForUrlParameters();
+
+      // Functions
+      function addUnitTypeToUI(unitType) {
+        const unitTypeDiv = document.createElement('div');
+        unitTypeDiv.className = 'unit-type';
+
+        unitTypeDiv.innerHTML = `
+          <div class="unit-type-header">
+            <input type="text" value="${unitType.type}" placeholder="Unit Type" class="unit-type-name">
+            <button class="btn-danger btn-icon remove-unit">✕</button>
+          </div>
+          <div class="unit-fields">
+            <div>
+              <label>Count</label>
+              <input type="text" value="${unitType.count}" min="1" class="unit-count" inputmode="numeric">
+            </div>
+            <div>
+              <label>Beds</label>
+              <input type="text" value="${unitType.beds}" min="0" class="unit-beds" inputmode="numeric">
+            </div>
+            <div>
+              <label>Baths</label>
+              <input type="text" value="${unitType.baths}" min="0" step="0.5" class="unit-baths" inputmode="numeric">
+            </div>
+            <div>
+              <label>Rent</label>
+              <div class="input-with-icon">
+                <span class="input-icon">$</span>
+                <input type="text" value="${unitType.rent.toLocaleString()}" min="0" class="unit-rent" inputmode="numeric">
+              </div>
+            </div>
+          </div>
+          <div class="unit-summary">
+            ${unitType.count}x ${unitType.beds}bd/${unitType.baths}ba @ $${unitType.rent.toLocaleString()}/mo = $${(unitType.count * unitType.rent).toLocaleString()}/mo total
+          </div>
+        `;
+
+        // Add number formatting to unit inputs
+        const numberInputs = unitTypeDiv.querySelectorAll('input[inputmode="numeric"]');
+        numberInputs.forEach(input => {
+          input.addEventListener('input', function() {
+            // Store the current cursor position
+            const cursorPos = this.selectionStart;
+
+            // Get the value without any non-numeric characters
+            let value = this.value.replace(/[^0-9.]/g, '');
+
+            // Format with commas for thousands
+            if (value !== '') {
+              if (value.includes('.')) {
+                const parts = value.split('.');
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                value = parts.join('.');
+              } else {
+                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+              }
+            }
+
+            // Calculate new cursor position considering added commas
+            const addedChars = value.length - this.value.replace(/,/g, '').length;
+            const newCursorPos = cursorPos + (addedChars > 0 ? 1 : 0);
+
+            // Update the input value
+            this.value = value;
+
+            // Restore cursor position
+            this.setSelectionRange(newCursorPos, newCursorPos);
+
+            updateUnitSummary(unitTypeDiv);
+            calculate();
+          });
+
+          // Allow clearing the field completely
+          input.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' &&
+                (this.selectionStart === 0 && this.selectionEnd === this.value.length ||
+                 this.selectionStart === 0 && this.selectionEnd === 0)) {
+              this.value = '';
+              updateUnitSummary(unitTypeDiv);
+              calculate();
+              e.preventDefault();
+            }
+          });
+        });
+
+        // Add remove button event listener
+        const removeButton = unitTypeDiv.querySelector('.remove-unit');
+        removeButton.addEventListener('click', function() {
+          // Only remove if there's more than one unit type
+          if (document.querySelectorAll('.unit-type').length > 1) {
+            unitTypeDiv.remove();
+            calculate();
+          } else {
+            showNotification('You must have at least one unit type.', 'error');
+          }
+        });
+
+        unitTypesContainer.appendChild(unitTypeDiv);
+
+        // Update water/sewer/trash default value
+        const totalUnits = getUnitTypes().reduce((sum, unit) => sum + unit.count, 0);
+        inputs.waterSewerTrash.value = formatNumber(totalUnits * 75);
+      }
+
+      function updateUnitSummary(unitTypeDiv) {
+        const count = parseFloat(unitTypeDiv.querySelector('.unit-count').value.replace(/,/g, '')) || 0;
+        const beds = parseFloat(unitTypeDiv.querySelector('.unit-beds').value.replace(/,/g, '')) || 0;
+        const baths = parseFloat(unitTypeDiv.querySelector('.unit-baths').value.replace(/,/g, '')) || 0;
+        const rent = parseFloat(unitTypeDiv.querySelector('.unit-rent').value.replace(/,/g, '')) || 0;
+
+        const summary = `${count}x ${beds}bd/${baths}ba @ $${rent.toLocaleString()}/mo = $${(count * rent).toLocaleString()}/mo total`;
+        unitTypeDiv.querySelector('.unit-summary').textContent = summary;
+      }
+
+      function getUnitTypes() {
+        const unitTypes = [];
+        document.querySelectorAll('.unit-type').forEach(unitTypeDiv => {
+          const type = unitTypeDiv.querySelector('.unit-type-name').value;
+          const count = parseFloat(unitTypeDiv.querySelector('.unit-count').value.replace(/,/g, '')) || 0;
+          const beds = parseFloat(unitTypeDiv.querySelector('.unit-beds').value.replace(/,/g, '')) || 0;
+          const baths = parseFloat(unitTypeDiv.querySelector('.unit-baths').value.replace(/,/g, '')) || 0;
+          const rent = parseFloat(unitTypeDiv.querySelector('.unit-rent').value.replace(/,/g, '')) || 0;
+
+          unitTypes.push({ type, count, beds, baths, rent });
+        });
+        return unitTypes;
+      }
+
+      function parseNumericInput(input) {
+        return parseFloat(input.value.replace(/,/g, '')) || 0;
+      }
+
+      function updateUnitRentSummary() {
+        const unitTypes = getUnitTypes();
+        const unitRentDetailsElement = document.getElementById('unit-rent-details');
+        unitRentDetailsElement.innerHTML = '';
+        
+        // Create a summary for each unit type
+        unitTypes.forEach(unit => {
+          const rentItem = document.createElement('div');
+          rentItem.className = 'unit-rent-item';
+          
+          const labelSpan = document.createElement('span');
+          labelSpan.className = 'unit-rent-label';
+          labelSpan.textContent = `Rent (${unit.beds}BR ${unit.baths}BA):`;
+          
+          const valueSpan = document.createElement('span');
+          valueSpan.className = 'unit-rent-value';
+          valueSpan.textContent = formatMoney(unit.rent);
+          
+          rentItem.appendChild(labelSpan);
+          rentItem.appendChild(valueSpan);
+          unitRentDetailsElement.appendChild(rentItem);
+        });
+      }
+
+      function calculate() {
+        // Get input values
+        const listPrice = parseNumericInput(inputs.listPrice);
+        const yearlyTax = parseNumericInput(inputs.yearlyTax);
+        const renovationCosts = parseNumericInput(inputs.renovationCosts);
+        const yearlyInsurance = parseNumericInput(inputs.yearlyInsurance);
+        const vacancyRate = parseNumericInput(inputs.vacancyRate);
+        const downPaymentPercent = parseNumericInput(inputs.downPayment);
+        const interestRate = parseNumericInput(inputs.interestRate);
+        const loanTerm = parseNumericInput(inputs.loanTerm);
+        const breakEvenTarget = parseNumericInput(inputs.breakEvenTarget);
+        const waterSewerTrash = parseNumericInput(inputs.waterSewerTrash);
+        const capex = parseNumericInput(inputs.capex);
+        let repairsMaintenance = parseNumericInput(inputs.repairsMaintenance);
+
+        // Update repairs & maintenance to be 0.02% of purchase price if empty or default value
+        if (listPrice > 0 && (repairsMaintenance === 0 || repairsMaintenance === 100)) {
+          const defaultRepairs = listPrice * 0.0002;
+          inputs.repairsMaintenance.value = formatNumber(defaultRepairs);
+          repairsMaintenance = defaultRepairs;
+        }
+
+        // Get unit types and calculate total rent
+        const unitTypes = getUnitTypes();
+        const totalUnits = unitTypes.reduce((sum, unit) => sum + unit.count, 0);
+        const monthlyRent = unitTypes.reduce((sum, unit) => sum + (unit.count * unit.rent), 0);
+        const yearlyRent = monthlyRent * 12;
+
+        // Set water/sewer/trash to $75 per unit if it was default value
+        if ((waterSewerTrash === 0 || waterSewerTrash === 300) && totalUnits !== 0) {
+          const defaultWaterSewerTrash = totalUnits * 75;
+          inputs.waterSewerTrash.value = formatNumber(defaultWaterSewerTrash);
+        }
+
+        // Calculate basic values
+        const downPayment = listPrice * (downPaymentPercent / 100);
+        const loanAmount = listPrice - downPayment;
+        const closingCosts = listPrice * 0.04;
+        const cashNeeded = downPayment + closingCosts + renovationCosts;
+
+        // Calculate mortgage payment
+        const monthlyInterestRate = interestRate / 100 / 12;
+        const numPayments = loanTerm * 12;
+        let monthlyMortgage = 0;
+
+        if (monthlyInterestRate > 0) {
+          monthlyMortgage = loanAmount *
+            (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numPayments)) /
+            (Math.pow(1 + monthlyInterestRate, numPayments) - 1);
+        } else {
+          monthlyMortgage = loanAmount / numPayments;
+        }
+
+        // Apply vacancy rate
+        const effectiveMonthlyRent = monthlyRent * (1 - vacancyRate / 100);
+        const effectiveYearlyRent = effectiveMonthlyRent * 12;
+
+        // Calculate expenses
+        const monthlyTax = yearlyTax / 12;
+        const monthlyInsurance = yearlyInsurance / 12;
+        const monthlyExpenses = monthlyTax + monthlyInsurance + waterSewerTrash + capex + repairsMaintenance;
+        const yearlyExpenses = monthlyExpenses * 12;
+
+        // Calculate NOI and debt service
+        const noi = effectiveYearlyRent - yearlyExpenses;
+        const yearlyMortgage = monthlyMortgage * 12;
+        const dscr = yearlyMortgage > 0 ? noi / yearlyMortgage : 0;
+
+        // Calculate cashflow
+        const monthlyCashflow = effectiveMonthlyRent - monthlyExpenses - monthlyMortgage;
+        const yearlyCashflow = monthlyCashflow * 12;
+
+        // Calculate break-even time
+        const breakEvenYears = yearlyCashflow > 0 ? cashNeeded / yearlyCashflow : 0;
+        const breakEvenMonths = Math.round((breakEvenYears - Math.floor(breakEvenYears)) * 12);
+
+        // Calculate investment metrics
+        let cashRoi = 0;
+        if (cashNeeded > 0 && yearlyCashflow > 0 && breakEvenYears > 0) {
+          // Calculate the annualized ROI using the formula:
+          // (1 + Total ROI)^(1/Break Even Years) - 1
+          // Where Total ROI is 100% (we doubled our money)
+          cashRoi = (Math.pow(1 + 1, 1/breakEvenYears) - 1) * 100;
+        } else {
+          cashRoi = 0;
+        }
+
+        const capRate = listPrice > 0 ? (noi / listPrice) * 100 : 0;
+        const pricePerUnit = totalUnits > 0 ? listPrice / totalUnits : 0;
+        const onePercentRule = listPrice > 0 ? (monthlyRent / listPrice) * 100 : 0;
+
+        // Calculate max offer price
+        let maxOfferPrice = 0;
+        if (yearlyCashflow > 0) {
+          // Start with a high price and decrease until we hit target break-even period
+          let testPrice = listPrice * 2; // Start with double the list price as a high bound
+          const step = 10000;
+          let testBreakEven = Infinity;
+
+          while (testBreakEven > breakEvenTarget && testPrice > 0) {
+            // Calculate with the test price
+            const testDownPayment = testPrice * (downPaymentPercent / 100);
+            const testLoanAmount = testPrice - testDownPayment;
+            const testClosingCosts = testPrice * 0.04;
+            const testCashNeeded = testDownPayment + testClosingCosts + renovationCosts;
+
+            // Test mortgage payment
+            let testMonthlyMortgage = 0;
+            if (monthlyInterestRate > 0) {
+              testMonthlyMortgage = testLoanAmount *
+                (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numPayments)) /
+                (Math.pow(1 + monthlyInterestRate, numPayments) - 1);
+            } else {
+              testMonthlyMortgage = testLoanAmount / numPayments;
+            }
+
+            // Test adjusted expenses
+            const testYearlyTax = yearlyTax * (testPrice / listPrice);
+            const testRepairsMaintenance = testPrice * 0.0002;
+            const testMonthlyExpenses =
+              (testYearlyTax / 12) + monthlyInsurance + waterSewerTrash +
+              capex + testRepairsMaintenance;
+
+            // Test cashflow
+            const testMonthlyCashflow = effectiveMonthlyRent - testMonthlyExpenses - testMonthlyMortgage;
+            const testYearlyCashflow = testMonthlyCashflow * 12;
+
+            // Test break-even time
+            testBreakEven = testYearlyCashflow > 0 ? testCashNeeded / testYearlyCashflow : Infinity;
+
+            // If we're still above our target break-even period, reduce the price
+            if (testBreakEven > breakEvenTarget) {
+              testPrice -= step;
+            } else {
+              // We found our max price
+              break;
+            }
+          }
+
+          maxOfferPrice = testPrice > 0 ? testPrice : 0;
+        }
+
+        // Update results
+        results.cashNeeded.textContent = formatMoney(cashNeeded);
+        results.monthlyRent.textContent = formatMoney(monthlyRent);
+        results.monthlyMortgage.textContent = formatMoney(monthlyMortgage);
+        results.monthlyCashflow.textContent = formatMoney(monthlyCashflow);
+        results.yearlyCashflow.textContent = formatMoney(yearlyCashflow);
+        results.cashRoi.textContent = formatPercent(cashRoi);
+        results.capRate.textContent = formatPercent(capRate);
+        results.dscr.textContent = formatNumber(dscr);
+        results.breakEven.textContent = formatTime(breakEvenYears);
+        results.maxOffer.textContent = formatMoney(maxOfferPrice);
+        results.pricePerUnit.textContent = formatMoney(pricePerUnit);
+        results.onePercent.textContent = formatPercent(onePercentRule);
+
+        // Apply color classes
+        applyColorClass(results.monthlyCashflow, monthlyCashflow);
+        applyColorClass(results.yearlyCashflow, yearlyCashflow);
+        applyColorClass(results.cashRoi, cashRoi);
+        applyColorClass(results.dscr, dscr, 1.25, 1);
+        applyColorClass(results.onePercent, onePercentRule, 1);
+        
+        // Update unit rent summary
+        updateUnitRentSummary();
+      }
+
+      function formatMoney(value) {
+        return '$' + value.toLocaleString('en-US', { maximumFractionDigits: 0 });
+      }
+
+      function formatPercent(value) {
+        return value.toFixed(2) + '%';
+      }
+
+      function formatNumber(value) {
+        return value.toFixed(2);
+      }
+
+      function formatTime(years) {
+        const fullYears = Math.floor(years);
+        const months = Math.round((years - fullYears) * 12);
+        return `${fullYears}y ${months}m`;
+      }
+
+      function applyColorClass(element, value, goodThreshold = 0, warningThreshold = null) {
+        // Remove existing classes
+        element.classList.remove('positive', 'negative', 'warning');
+
+        if (value >= goodThreshold) {
+          element.classList.add('positive');
+        } else if (warningThreshold !== null && value >= warningThreshold) {
+          element.classList.add('warning');
+        } else {
+          element.classList.add('negative');
+        }
+      }
+
+      function showNotification(message, type = 'success') {
+        const notificationDiv = document.getElementById('notification');
+        notificationDiv.textContent = message;
+        notificationDiv.className = `notification ${type}`;
+        notificationDiv.classList.remove('hidden');
+
+        // Hide the notification after 5 seconds
+        setTimeout(() => {
+          notificationDiv.classList.add('hidden');
+        }, 5000);
+      }
+
+      function formatNumber(value) {
+        return value.toLocaleString('en-US');
+      }
+
+      function checkForUrlParameters() {
+        // Check if URL has data parameter from Chrome extension
+        const urlParams = new URLSearchParams(window.location.search);
+        const dataParam = urlParams.get('data');
+
+        if (dataParam) {
+          try {
+            // Parse the data from URL
+            const data = JSON.parse(decodeURIComponent(dataParam));
+
+            // Populate the calculator with the data
+            populateCalculator(data);
+
+            // Show success notification
+            showNotification('Data imported successfully from MLS listing!');
+          } catch (error) {
+            console.error('Error parsing data from URL:', error);
+            showNotification('Failed to import data from URL parameters.', 'error');
+          }
+        }
+      }
+
+      function populateCalculator(data) {
+        // Populate property details
+        if (data.listPrice) {
+          // Check if the list price seems low compared to what might be in the address
+          // This is a fallback in case the extension missed a price change
+          const addressStr = data.address ? data.address.toString() : '';
+          const priceInAddress = addressStr.match(/\$[\d,]+/);
+          
+          if (priceInAddress) {
+            const extractedPrice = parseFloat(priceInAddress[0].replace(/[^\d.]/g, ''));
+            // If the price in the address is significantly different, log a warning
+            if (extractedPrice > 0 && Math.abs(extractedPrice - data.listPrice) / data.listPrice > 0.1) {
+              console.warn(`Possible price discrepancy detected: ${data.listPrice} vs ${extractedPrice} in address`);
+            }
+          }
+          
+          inputs.listPrice.value = formatNumber(data.listPrice);
+        }
+        
+        if (data.yearlyTax) inputs.yearlyTax.value = formatNumber(data.yearlyTax);
+        if (data.yearlyInsurance) inputs.yearlyInsurance.value = formatNumber(data.yearlyInsurance);
+        
+        // Clean up the address
+        if (data.address) {
+          let cleanAddress = data.address;
+          console.log("Original address:", cleanAddress);
+          
+          // Remove any price values (lines with dollar signs)
+          cleanAddress = cleanAddress.split('\n')
+            .filter(line => !line.includes('$'))
+            .join(', ')
+            .replace(/,\s*,/g, ',') // Remove duplicate commas
+            .trim();
+          
+          // Fix excessive spacing
+          cleanAddress = cleanAddress.replace(/\s{2,}/g, ' ');
+          
+          // Ensure proper format for city, state, zip
+          cleanAddress = cleanAddress.replace(/([A-Z][a-z]+)(\s*,\s*)([A-Z]{2})(\s*)(\d{5})/, '$1$2 $3 $5');
+          
+          console.log("Cleaned address:", cleanAddress);
+          inputs.address.value = cleanAddress;
+        }
+
+        // Handle unit types
+        if (data.units && data.units.length > 0) {
+          // Clear existing unit types
+          unitTypesContainer.innerHTML = '';
+
+          // Add unit types from data
+          data.units.forEach(unit => addUnitTypeToUI(unit));
+        }
+
+        // Recalculate
+        calculate();
+      }
+    });
+  </script>
+</body>
+</html>
