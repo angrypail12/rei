@@ -543,37 +543,30 @@
         onePercent: document.getElementById('result-one-percent')
       };
 
-      // Preset unit types
+      // Preset unit types - all rents set to $0
       const presetUnitTypes = [
-        { type: 'Studio 1BA', count: 0, rent: 800, beds: 0, baths: 1 },
-        { type: '1BR 1BA', count: 0, rent: 1000, beds: 1, baths: 1 },
-        { type: '2BR 1BA', count: 0, rent: 1200, beds: 2, baths: 1 },
-        { type: '2BR 2BA', count: 0, rent: 1400, beds: 2, baths: 2 },
-        { type: '3BR 1BA', count: 0, rent: 1400, beds: 3, baths: 1 },
-        { type: '3BR 2BA', count: 0, rent: 1600, beds: 3, baths: 2 },
-        { type: '4BR 1BA', count: 0, rent: 1600, beds: 4, baths: 1 },
-        { type: '4BR 2BA', count: 0, rent: 1800, beds: 4, baths: 2 }
+        { type: 'Studio 1BA', count: 0, rent: 0, beds: 0, baths: 1 },
+        { type: '1BR 1BA', count: 0, rent: 0, beds: 1, baths: 1 },
+        { type: '2BR 1BA', count: 0, rent: 0, beds: 2, baths: 1 },
+        { type: '2BR 2BA', count: 0, rent: 0, beds: 2, baths: 2 },
+        { type: '3BR 1BA', count: 0, rent: 0, beds: 3, baths: 1 },
+        { type: '3BR 2BA', count: 0, rent: 0, beds: 3, baths: 2 },
+        { type: '4BR 1BA', count: 0, rent: 0, beds: 4, baths: 1 },
+        { type: '4BR 2BA', count: 0, rent: 0, beds: 4, baths: 2 }
       ];
 
       // Add number formatting to input fields
       Object.keys(inputs).forEach(key => {
         if (key !== 'address') {
           inputs[key].addEventListener('input', function(e) {
-            // Store the current cursor position
             const cursorPos = this.selectionStart;
-
-            // Get the value without any non-numeric characters
             let value = this.value.replace(/[^0-9.]/g, '');
-
-            // Don't allow multiple decimal points
             const decimalPointCount = (value.match(/\./g) || []).length;
             if (decimalPointCount > 1) {
               const firstDecimalIndex = value.indexOf('.');
               value = value.substring(0, firstDecimalIndex + 1) +
                      value.substring(firstDecimalIndex + 1).replace(/\./g, '');
             }
-
-            // Format with commas for thousands
             if (value !== '') {
               if (value.includes('.')) {
                 const parts = value.split('.');
@@ -583,22 +576,13 @@
                 value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
               }
             }
-
-            // Calculate new cursor position considering added commas
             const addedChars = value.length - this.value.replace(/,/g, '').length;
             const newCursorPos = cursorPos + (addedChars > 0 ? 1 : 0);
-
-            // Update the input value
             this.value = value;
-
-            // Restore cursor position
             this.setSelectionRange(newCursorPos, newCursorPos);
-
-            // Trigger calculation
             calculate();
           });
 
-          // Allow clearing the field completely
           inputs[key].addEventListener('keydown', function(e) {
             if (e.key === 'Backspace' &&
                 (this.selectionStart === 0 && this.selectionEnd === this.value.length ||
@@ -616,28 +600,21 @@
 
       // Add event listeners
       addUnitTypeButton.addEventListener('click', function() {
-        // Get letter for next unit type (A, B, C, etc.)
         const customCount = document.querySelectorAll('.unit-type[data-custom="true"]').length;
         const nextLetter = String.fromCharCode(65 + customCount);
-        addUnitTypeToUI({ type: `Custom ${nextLetter}`, count: 1, rent: 1000, beds: 1, baths: 1 }, false);
+        addUnitTypeToUI({ type: `Custom ${nextLetter}`, count: 1, rent: 0, beds: 1, baths: 1 }, false);
       });
 
-      // Copy results button
       copyResultsButton.addEventListener('click', function() {
         copyResultsToClipboard();
       });
 
-      // Set water/sewer/trash based on unit count
       const totalUnits = presetUnitTypes.reduce((sum, unit) => sum + unit.count, 0);
       inputs.waterSewerTrash.value = formatNumber(totalUnits * 75);
 
-      // Initial calculation
       calculate();
-
-      // Check URL parameters for data from Chrome extension
       checkForUrlParameters();
 
-      // Functions
       function addUnitTypeToUI(unitType, isPreset = false) {
         const unitTypeDiv = document.createElement('div');
         unitTypeDiv.className = 'unit-type';
@@ -670,17 +647,11 @@
           </div>
         `;
 
-        // Add number formatting to unit inputs
         const numberInputs = unitTypeDiv.querySelectorAll('input[inputmode="numeric"]');
         numberInputs.forEach(input => {
           input.addEventListener('input', function() {
-            // Store the current cursor position
             const cursorPos = this.selectionStart;
-
-            // Get the value without any non-numeric characters
             let value = this.value.replace(/[^0-9.]/g, '');
-
-            // Format with commas for thousands
             if (value !== '') {
               if (value.includes('.')) {
                 const parts = value.split('.');
@@ -690,22 +661,14 @@
                 value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
               }
             }
-
-            // Calculate new cursor position considering added commas
             const addedChars = value.length - this.value.replace(/,/g, '').length;
             const newCursorPos = cursorPos + (addedChars > 0 ? 1 : 0);
-
-            // Update the input value
             this.value = value;
-
-            // Restore cursor position
             this.setSelectionRange(newCursorPos, newCursorPos);
-
             updateUnitSummary(unitTypeDiv);
             calculate();
           });
 
-          // Allow clearing the field completely
           input.addEventListener('keydown', function(e) {
             if (e.key === 'Backspace' &&
                 (this.selectionStart === 0 && this.selectionEnd === this.value.length ||
@@ -718,7 +681,6 @@
           });
         });
 
-        // Add remove button event listener for custom units
         if (!isPreset) {
           const removeButton = unitTypeDiv.querySelector('.remove-unit');
           removeButton.addEventListener('click', function() {
@@ -733,8 +695,6 @@
         }
 
         unitTypesContainer.appendChild(unitTypeDiv);
-
-        // Update water/sewer/trash default value
         const totalUnits = getUnitTypes().reduce((sum, unit) => sum + unit.count, 0);
         inputs.waterSewerTrash.value = formatNumber(totalUnits * 75);
       }
@@ -745,13 +705,11 @@
         const typeSpan = unitTypeDiv.querySelector('.unit-type-name');
         const unitType = typeSpan.textContent;
         
-        // Extract beds and baths from the unit type name
         const bedBathMatch = unitType.match(/(\d+)BR\s+(\d+(?:\.\d+)?)BA|Studio\s+(\d+(?:\.\d+)?)BA/i);
         let beds, baths;
         
         if (bedBathMatch) {
           if (bedBathMatch[3]) {
-            // Studio case
             beds = 0;
             baths = bedBathMatch[3];
           } else {
@@ -775,13 +733,11 @@
           const count = parseFloat(unitTypeDiv.querySelector('.unit-count').value.replace(/,/g, '')) || 0;
           const rent = parseFloat(unitTypeDiv.querySelector('.unit-rent').value.replace(/,/g, '')) || 0;
 
-          // Extract beds and baths from the unit type name
           const bedBathMatch = type.match(/(\d+)BR\s+(\d+(?:\.\d+)?)BA|Studio\s+(\d+(?:\.\d+)?)BA/i);
           let beds, baths;
           
           if (bedBathMatch) {
             if (bedBathMatch[3]) {
-              // Studio case
               beds = 0;
               baths = bedBathMatch[3];
             } else {
@@ -793,7 +749,6 @@
             baths = 1;
           }
 
-          // Only include units with count > 0
           if (count > 0) {
             unitTypes.push({ type, count, beds, baths, rent });
           }
@@ -810,7 +765,6 @@
         const unitRentDetailsElement = document.getElementById('unit-rent-details');
         unitRentDetailsElement.innerHTML = '';
         
-        // Create a summary for each unit type
         unitTypes.forEach(unit => {
           const rentItem = document.createElement('div');
           rentItem.className = 'unit-rent-item';
@@ -853,7 +807,6 @@
       }
 
       function calculate() {
-        // Get input values
         const listPrice = parseNumericInput(inputs.listPrice);
         const yearlyTax = parseNumericInput(inputs.yearlyTax);
         const renovationCosts = parseNumericInput(inputs.renovationCosts);
@@ -867,32 +820,27 @@
         const capex = parseNumericInput(inputs.capex);
         let repairsMaintenance = parseNumericInput(inputs.repairsMaintenance);
 
-        // Update repairs & maintenance to be 0.02% of purchase price if empty or default value
         if (listPrice > 0 && (repairsMaintenance === 0 || repairsMaintenance === 100)) {
           const defaultRepairs = listPrice * 0.0002;
           inputs.repairsMaintenance.value = formatNumber(defaultRepairs);
           repairsMaintenance = defaultRepairs;
         }
 
-        // Get unit types and calculate total rent (only units with count > 0)
         const unitTypes = getUnitTypes();
         const totalUnits = unitTypes.reduce((sum, unit) => sum + unit.count, 0);
         const monthlyRent = unitTypes.reduce((sum, unit) => sum + (unit.count * unit.rent), 0);
         const yearlyRent = monthlyRent * 12;
 
-        // Set water/sewer/trash to $75 per unit if it was default value
         if ((waterSewerTrash === 0 || waterSewerTrash === 300) && totalUnits !== 0) {
           const defaultWaterSewerTrash = totalUnits * 75;
           inputs.waterSewerTrash.value = formatNumber(defaultWaterSewerTrash);
         }
 
-        // Calculate basic values
         const downPayment = listPrice * (downPaymentPercent / 100);
         const loanAmount = listPrice - downPayment;
         const closingCosts = listPrice * 0.04;
         const cashNeeded = downPayment + closingCosts + renovationCosts;
 
-        // Calculate mortgage payment
         const monthlyInterestRate = interestRate / 100 / 12;
         const numPayments = loanTerm * 12;
         let monthlyMortgage = 0;
@@ -905,42 +853,32 @@
           monthlyMortgage = loanAmount / numPayments;
         }
 
-        // Apply vacancy rate
         const effectiveMonthlyRent = monthlyRent * (1 - vacancyRate / 100);
         const effectiveYearlyRent = effectiveMonthlyRent * 12;
 
-        // Calculate expenses
         const monthlyTax = yearlyTax / 12;
         const monthlyInsurance = yearlyInsurance / 12;
         const monthlyExpenses = monthlyTax + monthlyInsurance + waterSewerTrash + capex + repairsMaintenance;
         const yearlyExpenses = monthlyExpenses * 12;
 
-        // Calculate NOI and debt service
         const noi = effectiveYearlyRent - yearlyExpenses;
         const yearlyMortgage = monthlyMortgage * 12;
         const dscr = yearlyMortgage > 0 ? noi / yearlyMortgage : 0;
 
-        // Calculate cashflow
         const monthlyCashflow = effectiveMonthlyRent - monthlyExpenses - monthlyMortgage;
         const yearlyCashflow = monthlyCashflow * 12;
 
-        // Calculate break-even time
         const breakEvenYears = yearlyCashflow > 0 ? cashNeeded / yearlyCashflow : 0;
-        const breakEvenMonths = Math.round((breakEvenYears - Math.floor(breakEvenYears)) * 12);
 
-        // Calculate investment metrics
         let cashRoi = 0;
         if (cashNeeded > 0 && yearlyCashflow > 0 && breakEvenYears > 0) {
           cashRoi = (Math.pow(1 + 1, 1/breakEvenYears) - 1) * 100;
-        } else {
-          cashRoi = 0;
         }
 
         const capRate = listPrice > 0 ? (noi / listPrice) * 100 : 0;
         const pricePerUnit = totalUnits > 0 ? listPrice / totalUnits : 0;
         const onePercentRule = listPrice > 0 ? (monthlyRent / listPrice) * 100 : 0;
 
-        // Calculate max offer price
         let maxOfferPrice = 0;
         if (yearlyCashflow > 0) {
           let testPrice = listPrice * 2;
@@ -983,7 +921,6 @@
           maxOfferPrice = testPrice > 0 ? testPrice : 0;
         }
 
-        // Update results
         results.cashNeeded.textContent = formatMoney(cashNeeded);
         results.monthlyRent.textContent = formatMoney(monthlyRent);
         results.monthlyMortgage.textContent = formatMoney(monthlyMortgage);
@@ -997,14 +934,12 @@
         results.pricePerUnit.textContent = formatMoney(pricePerUnit);
         results.onePercent.textContent = formatPercent(onePercentRule);
 
-        // Apply color classes
         applyColorClass(results.monthlyCashflow, monthlyCashflow);
         applyColorClass(results.yearlyCashflow, yearlyCashflow);
         applyColorClass(results.cashRoi, cashRoi);
         applyColorClass(results.dscr, dscr, 1.25, 1);
         applyColorClass(results.onePercent, onePercentRule, 1);
         
-        // Update unit rent summary
         updateUnitRentSummary();
       }
 
@@ -1087,9 +1022,20 @@
           inputs.address.value = cleanAddress;
         }
 
+        // Update existing preset units with data from extension
         if (data.units && data.units.length > 0) {
-          unitTypesContainer.innerHTML = '';
-          data.units.forEach(unit => addUnitTypeToUI(unit));
+          const presetUnitDivs = document.querySelectorAll('.unit-type[data-preset="true"]');
+          
+          presetUnitDivs.forEach(unitDiv => {
+            const unitTypeName = unitDiv.querySelector('.unit-type-name').textContent;
+            const matchingUnit = data.units.find(u => u.type === unitTypeName);
+            
+            if (matchingUnit) {
+              unitDiv.querySelector('.unit-count').value = matchingUnit.count || 0;
+              unitDiv.querySelector('.unit-rent').value = formatNumber(matchingUnit.rent || 0);
+              updateUnitSummary(unitDiv);
+            }
+          });
         }
 
         calculate();
