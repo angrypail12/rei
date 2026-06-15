@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Real Estate Investment Calculator</title>
   <style>
-    /* Basic styles */
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       margin: 0;
@@ -14,304 +13,62 @@
       min-height: 100vh;
       color: #1e293b;
     }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    h1 {
-      color: #1e40af;
-      font-size: 2rem;
-      margin: 0;
-    }
-
-    .subtitle {
-      color: #64748b;
-      margin-top: 5px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(1, 1fr);
-      gap: 20px;
-    }
-
-    @media (min-width: 768px) {
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    .card {
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-header {
-      background: linear-gradient(to right, #dbeafe, #e0e7ff);
-      padding: 15px;
-      border-bottom: 4px solid #3b82f6;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .card-header h2 {
-      margin: 0;
-      font-size: 1.25rem;
-      color: #1e40af;
-    }
-
-    .card-content {
-      padding: 20px;
-    }
-
-    .input-group {
-      margin-bottom: 15px;
-    }
-
-    label {
-      display: block;
-      font-weight: 500;
-      margin-bottom: 5px;
-      font-size: 0.9rem;
-    }
-
-    .input-group.inline {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    input[type="number"],
-    input[type="text"] {
-      width: 100%;
-      padding: 8px 12px;
-      border: 1px solid #d1d5db;
-      border-radius: 4px;
-      font-size: 1rem;
-      transition: border-color 0.2s;
-    }
-
-    input[type="number"]:focus,
-    input[type="text"]:focus {
-      border-color: #3b82f6;
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-    }
-
-    .input-with-icon {
-      position: relative;
-    }
-
-    .input-with-icon input {
-      padding-left: 30px;
-    }
-
-    .input-icon {
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #64748b;
-    }
-
-    .unit-type {
-      background: #f8fafc;
-      border-radius: 8px;
-      padding: 15px;
-      margin-bottom: 15px;
-      border: 1px solid #e2e8f0;
-    }
-
-    .unit-type-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .unit-fields {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .unit-summary {
-      text-align: right;
-      font-size: 0.9rem;
-      color: #64748b;
-      margin-top: 10px;
-    }
-
-    button {
-      cursor: pointer;
-      padding: 8px 16px;
-      border-radius: 4px;
-      font-weight: 500;
-      transition: background-color 0.2s, transform 0.1s;
-    }
-
-    button:active {
-      transform: translateY(1px);
-    }
-
-    .btn-primary {
-      background-color: #3b82f6;
-      color: white;
-      border: none;
-    }
-
-    .btn-primary:hover {
-      background-color: #2563eb;
-    }
-
-    .btn-secondary {
-      background-color: #f1f5f9;
-      color: #64748b;
-      border: 1px solid #e2e8f0;
-    }
-
-    .btn-secondary:hover {
-      background-color: #e2e8f0;
-    }
-
-    .btn-danger {
-      background-color: #fee2e2;
-      color: #b91c1c;
-      border: 1px solid #fecaca;
-    }
-
-    .btn-danger:hover {
-      background-color: #fecaca;
-    }
-
-    .btn-icon {
-      width: 30px;
-      height: 30px;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .add-unit-btn {
-      width: 100%;
-      margin-top: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .results-table {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5px 10px;
-    }
-
-    .results-label {
-      font-weight: 500;
-    }
-
-    .results-value {
-      text-align: right;
-      font-weight: 600;
-    }
-
-    .positive {
-      color: #059669;
-    }
-
-    .negative {
-      color: #dc2626;
-    }
-
-    .warning {
-      color: #d97706;
-    }
-
-    .highlight {
-      color: #2563eb;
-    }
-
-    .notification {
-      padding: 10px 15px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      animation: fadeOut 5s forwards;
-    }
-
-    .notification.success {
-      background-color: #d1fae5;
-      color: #047857;
-    }
-
-    .notification.error {
-      background-color: #fee2e2;
-      color: #b91c1c;
-    }
-
-    @keyframes fadeOut {
-      0% { opacity: 1; }
-      80% { opacity: 1; }
-      100% { opacity: 0; }
-    }
-
-    .hidden {
-      display: none !important;
-    }
-    
-    .unit-rent-summary {
-      margin-top: 20px;
-      padding-top: 15px;
-      border-top: 1px solid #e2e8f0;
-    }
-
-    .unit-rent-summary h3 {
-      margin-top: 0;
-      margin-bottom: 10px;
-      font-size: 1rem;
-      color: #1e40af;
-    }
-
-    .unit-rent-item {
-      margin-bottom: 5px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .unit-rent-label {
-      font-weight: 500;
-    }
-
-    .unit-rent-value {
-      font-weight: 600;
-    }
-
-    .copy-button {
-      padding: 6px 12px;
-      font-size: 0.85rem;
-    }
+    * { box-sizing: border-box; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    header { text-align: center; margin-bottom: 30px; }
+    h1 { color: #1e40af; font-size: 2rem; margin: 0; }
+    .subtitle { color: #64748b; margin-top: 5px; }
+    .grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 20px; }
+    @media (min-width: 768px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    .card { background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+    .card-header { background: linear-gradient(to right, #dbeafe, #e0e7ff); padding: 15px; border-bottom: 4px solid #3b82f6; display: flex; justify-content: space-between; align-items: center; }
+    .card-header h2 { margin: 0; font-size: 1.25rem; color: #1e40af; }
+    .card-content { padding: 20px; }
+    .input-group { margin-bottom: 15px; }
+    label { display: block; font-weight: 500; margin-bottom: 5px; font-size: 0.9rem; }
+    .input-group.inline { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    input[type="number"], input[type="text"] { width: 100%; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 4px; font-size: 1rem; transition: border-color 0.2s; }
+    input[type="number"]:focus, input[type="text"]:focus { border-color: #3b82f6; outline: none; box-shadow: 0 0 0 3px rgba(59,130,246,0.2); }
+    .input-with-icon { position: relative; }
+    .input-with-icon input { padding-left: 30px; }
+    .input-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #64748b; }
+    .unit-type { background: #f8fafc; border-radius: 8px; padding: 15px; margin-bottom: 15px; border: 1px solid #e2e8f0; }
+    .unit-type-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .unit-fields { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .unit-summary { text-align: right; font-size: 0.9rem; color: #64748b; margin-top: 10px; }
+    button { cursor: pointer; padding: 8px 16px; border-radius: 4px; font-weight: 500; transition: background-color 0.2s, transform 0.1s; }
+    button:active { transform: translateY(1px); }
+    .btn-primary { background-color: #3b82f6; color: white; border: none; }
+    .btn-primary:hover { background-color: #2563eb; }
+    .btn-secondary { background-color: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; }
+    .btn-secondary:hover { background-color: #e2e8f0; }
+    .btn-danger { background-color: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+    .btn-danger:hover { background-color: #fecaca; }
+    .btn-icon { width: 30px; height: 30px; padding: 0; display: flex; align-items: center; justify-content: center; }
+    .add-unit-btn { width: 100%; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .results-table { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 10px; }
+    .results-label { font-weight: 500; }
+    .results-value { text-align: right; font-weight: 600; }
+    .positive { color: #059669; }
+    .negative { color: #dc2626; }
+    .warning { color: #d97706; }
+    .highlight { color: #2563eb; }
+    .notification { padding: 10px 15px; margin-bottom: 20px; border-radius: 8px; animation: fadeOut 5s forwards; }
+    .notification.success { background-color: #d1fae5; color: #047857; }
+    .notification.error { background-color: #fee2e2; color: #b91c1c; }
+    @keyframes fadeOut { 0% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; } }
+    .hidden { display: none !important; }
+    .unit-rent-summary { margin-top: 20px; padding-top: 15px; border-top: 1px solid #e2e8f0; }
+    .unit-rent-summary h3 { margin-top: 0; margin-bottom: 10px; font-size: 1rem; color: #1e40af; }
+    .unit-rent-item { margin-bottom: 5px; display: flex; justify-content: space-between; }
+    .unit-rent-label { font-weight: 500; }
+    .unit-rent-value { font-weight: 600; }
+    .copy-button { padding: 6px 12px; font-size: 0.85rem; }
+    /* Neighborhood match indicator */
+    #neighborhood-match { font-size: 0.8rem; margin-top: 4px; padding: 3px 8px; border-radius: 4px; display: none; }
+    #neighborhood-match.found { background: #d1fae5; color: #047857; display: block; }
+    #neighborhood-match.not-found { background: #fef3c7; color: #92400e; display: block; }
   </style>
 </head>
 <body>
@@ -325,13 +82,16 @@
     <div class="grid">
       <!-- Property Details Card -->
       <div class="card">
-        <div class="card-header">
-          <h2>Property Details</h2>
-        </div>
+        <div class="card-header"><h2>Property Details</h2></div>
         <div class="card-content">
           <div class="input-group">
             <label for="property-address">Property Address</label>
             <input type="text" id="property-address" placeholder="Enter property address">
+          </div>
+          <div class="input-group">
+            <label for="property-neighborhood">Neighborhood <span style="color:#64748b;font-weight:400">(auto-detected or type to override)</span></label>
+            <input type="text" id="property-neighborhood" placeholder="e.g. Logan Square">
+            <div id="neighborhood-match"></div>
           </div>
           <div class="input-group">
             <label for="list-price">List Price</label>
@@ -366,7 +126,7 @@
             </div>
             <div>
               <label for="vacancy-rate">Vacancy Rate (%)</label>
-              <input type="text" id="vacancy-rate" value="0" min="0" max="100" inputmode="numeric">
+              <input type="text" id="vacancy-rate" value="0" inputmode="numeric">
             </div>
           </div>
         </div>
@@ -374,28 +134,26 @@
 
       <!-- Loan Details Card -->
       <div class="card">
-        <div class="card-header">
-          <h2>Loan Details</h2>
-        </div>
+        <div class="card-header"><h2>Loan Details</h2></div>
         <div class="card-content">
           <div class="input-group inline">
             <div>
               <label for="down-payment">Down Payment (%)</label>
-              <input type="text" id="down-payment" value="25" min="0" max="100" inputmode="numeric">
+              <input type="text" id="down-payment" value="25" inputmode="numeric">
             </div>
             <div>
               <label for="interest-rate">Interest Rate (%)</label>
-              <input type="text" id="interest-rate" value="7.15" min="0" step="0.01" inputmode="numeric">
+              <input type="text" id="interest-rate" value="7.15" inputmode="numeric">
             </div>
           </div>
           <div class="input-group inline">
             <div>
               <label for="loan-term">Loan Term (years)</label>
-              <input type="text" id="loan-term" value="30" min="1" inputmode="numeric">
+              <input type="text" id="loan-term" value="30" inputmode="numeric">
             </div>
             <div>
               <label for="break-even-target">Target Break-Even (years)</label>
-              <input type="text" id="break-even-target" value="5" min="1" inputmode="numeric">
+              <input type="text" id="break-even-target" value="5" inputmode="numeric">
             </div>
           </div>
           <div class="input-group inline">
@@ -405,7 +163,7 @@
                 <span class="input-icon">$</span>
                 <input type="text" id="water-sewer-trash" value="300" inputmode="numeric">
               </div>
-              <p style="margin-top: 5px; font-size: 0.8rem; color: #64748b;">Default: $75 per unit</p>
+              <p style="margin-top:5px;font-size:0.8rem;color:#64748b">Default: $75 per unit</p>
             </div>
             <div>
               <label for="capex">Monthly CapEx</label>
@@ -421,20 +179,16 @@
               <span class="input-icon">$</span>
               <input type="text" id="repairs-maintenance" value="100" inputmode="numeric">
             </div>
-            <p style="margin-top: 5px; font-size: 0.8rem; color: #64748b;">Default: 0.02% of purchase price</p>
+            <p style="margin-top:5px;font-size:0.8rem;color:#64748b">Default: 0.02% of purchase price</p>
           </div>
         </div>
       </div>
 
       <!-- Unit Types Card -->
       <div class="card">
-        <div class="card-header">
-          <h2>Unit Types</h2>
-        </div>
+        <div class="card-header"><h2>Unit Types</h2></div>
         <div class="card-content">
-          <div id="unit-types-container">
-            <!-- Unit types will be added here by JavaScript -->
-          </div>
+          <div id="unit-types-container"></div>
           <button id="add-unit-type" class="btn-secondary add-unit-btn">
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M6 1V11M1 6H11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -448,50 +202,35 @@
       <div class="card">
         <div class="card-header">
           <h2>Investment Analysis Results</h2>
-          <button id="copy-results" class="btn-primary copy-button" title="Copy results to clipboard">Copy Results</button>
+          <button id="copy-results" class="btn-primary copy-button" title="Copy row for Google Sheets">📋 Copy Row</button>
         </div>
         <div class="card-content">
           <div class="results-table" id="results-content">
-            <!-- Rearranged metrics as requested -->
             <div class="results-label">Cash ROI:</div>
             <div id="result-cash-roi" class="results-value">0.00%</div>
-
             <div class="results-label">Yearly Cashflow:</div>
             <div id="result-yearly-cashflow" class="results-value">$0</div>
-
             <div class="results-label">Break-Even Point:</div>
             <div id="result-break-even" class="results-value">0y 0m</div>
-
             <div class="results-label">Cash Needed:</div>
             <div id="result-cash-needed" class="results-value highlight">$0</div>
-
             <div class="results-label">DSCR:</div>
             <div id="result-dscr" class="results-value">0.00</div>
-
             <div class="results-label">Cap Rate:</div>
             <div id="result-cap-rate" class="results-value">0.00%</div>
-
             <div class="results-label">Max Offer Price:</div>
             <div id="result-max-offer" class="results-value highlight">$0</div>
-            
-            <!-- Hidden for calculations but removed from display -->
             <div class="results-label hidden">Monthly Rent:</div>
             <div id="result-monthly-rent" class="results-value hidden">$0</div>
-
             <div class="results-label hidden">Monthly Mortgage:</div>
             <div id="result-monthly-mortgage" class="results-value hidden">$0</div>
-
             <div class="results-label hidden">Monthly Cashflow:</div>
             <div id="result-monthly-cashflow" class="results-value hidden">$0</div>
-
             <div class="results-label hidden">Price Per Unit:</div>
             <div id="result-price-per-unit" class="results-value hidden">$0</div>
-
             <div class="results-label hidden">1% Rule:</div>
             <div id="result-one-percent" class="results-value hidden">0.00%</div>
           </div>
-          
-          <!-- Add unit rent summary section -->
           <div id="unit-rent-summary" class="unit-rent-summary">
             <h3>Unit Rent Summary</h3>
             <div id="unit-rent-details"></div>
@@ -502,545 +241,432 @@
   </div>
 
   <script>
-    // Initialize the calculator
-    document.addEventListener('DOMContentLoaded', function() {
-      // DOM elements
-      const unitTypesContainer = document.getElementById('unit-types-container');
-      const addUnitTypeButton = document.getElementById('add-unit-type');
-      const notification = document.getElementById('notification');
-      const copyResultsButton = document.getElementById('copy-results');
+  // ── Neighborhood list (matches your Rankings tab) ──────────────────────────
+  const NEIGHBORHOODS = [
+    "Calumet Heights","Hegewisch","South Chicago","Berwyn IL","North Riverside IL",
+    "Lower West Side","Armour Square","Humboldt Park","All Humboldt","Belmont Cragin",
+    "Blue Island IL","Midlothian IL","Chicago Ridge IL","Logan Square","Irving Park",
+    "Garfield Ridge","Homewood IL","Matteson IL","Lansing IL","Melrose Park IL",
+    "Portage Park","Hermosa","Oak Lawn IL","Evergreen Park IL","Alsip IL",
+    "Hickory Hills IL","Justice IL","Bridgeview IL","Hyde Park","Kenwood","Oakland",
+    "Aurora IL","Elgin IL","Hanover Park IL","Roselle IL","Palatine IL",
+    "Tinley Park IL","Orland Park IL","Oak Forest IL","Palos Hills IL",
+    "West Ridge","Edison Park","Norwood Park","Jefferson Park","O'Hare",
+    "North Park","Forest Glen","Arlington Heights IL","Mount Prospect IL",
+    "Prospect Heights IL","Yorkville IL","Lombard IL","Villa Park IL",
+    "Uptown","Rogers Park","Zion IL","Waukegan IL","Des Plaines IL","Saint Charles IL",
+    "Norridge IL","Franklin Park IL","Schiller Park IL","Bensenville IL",
+    "Harwood Heights IL","Rosemont IL","Wheaton IL","Clarendon Hills IL",
+    "Highland Park IL","Highwood IL","Morgan Park","Washington Heights","Beverly",
+    "Mount Greenwood","Naperville IL","Vernon Hills IL","Wheeling IL","West Dundee IL",
+    "Crystal Lake IL","McHenry IL","Lakemoor IL","La Grange Park IL",
+    "North Center","Lincoln Square","Forest Park IL","Oak Park IL","Sycamore IL",
+    "Belvidere IL","Evanston IL","Near North Side","West Town","Near West Side"
+  ];
 
-      // Input elements
-      const inputs = {
-        listPrice: document.getElementById('list-price'),
-        yearlyTax: document.getElementById('yearly-tax'),
-        renovationCosts: document.getElementById('renovation-costs'),
-        yearlyInsurance: document.getElementById('yearly-insurance'),
-        vacancyRate: document.getElementById('vacancy-rate'),
-        address: document.getElementById('property-address'),
-        downPayment: document.getElementById('down-payment'),
-        interestRate: document.getElementById('interest-rate'),
-        loanTerm: document.getElementById('loan-term'),
-        breakEvenTarget: document.getElementById('break-even-target'),
-        waterSewerTrash: document.getElementById('water-sewer-trash'),
-        capex: document.getElementById('capex'),
-        repairsMaintenance: document.getElementById('repairs-maintenance')
-      };
+  // Try to find a neighborhood from an address string
+  function detectNeighborhood(address) {
+    if (!address) return '';
+    const lower = address.toLowerCase();
+    // Sort longer names first so "Logan Square" beats "Logan"
+    const sorted = [...NEIGHBORHOODS].sort((a, b) => b.length - a.length);
+    for (const n of sorted) {
+      if (lower.includes(n.toLowerCase())) return n;
+    }
+    return '';
+  }
 
-      // Result elements
-      const results = {
-        cashNeeded: document.getElementById('result-cash-needed'),
-        monthlyRent: document.getElementById('result-monthly-rent'),
-        monthlyMortgage: document.getElementById('result-monthly-mortgage'),
-        monthlyCashflow: document.getElementById('result-monthly-cashflow'),
-        yearlyCashflow: document.getElementById('result-yearly-cashflow'),
-        cashRoi: document.getElementById('result-cash-roi'),
-        capRate: document.getElementById('result-cap-rate'),
-        dscr: document.getElementById('result-dscr'),
-        breakEven: document.getElementById('result-break-even'),
-        maxOffer: document.getElementById('result-max-offer'),
-        pricePerUnit: document.getElementById('result-price-per-unit'),
-        onePercent: document.getElementById('result-one-percent')
-      };
+  document.addEventListener('DOMContentLoaded', function() {
+    const unitTypesContainer = document.getElementById('unit-types-container');
+    const addUnitTypeButton  = document.getElementById('add-unit-type');
+    const notification       = document.getElementById('notification');
+    const copyResultsButton  = document.getElementById('copy-results');
+    const neighborhoodInput  = document.getElementById('property-neighborhood');
+    const neighborhoodMatch  = document.getElementById('neighborhood-match');
 
-      // Preset unit types - all rents set to $0
-      const presetUnitTypes = [
-        { type: 'Studio 1BA', count: 0, rent: 0, beds: 0, baths: 1 },
-        { type: '1BR 1BA', count: 0, rent: 0, beds: 1, baths: 1 },
-        { type: '2BR 1BA', count: 0, rent: 0, beds: 2, baths: 1 },
-        { type: '2BR 2BA', count: 0, rent: 0, beds: 2, baths: 2 },
-        { type: '3BR 1BA', count: 0, rent: 0, beds: 3, baths: 1 },
-        { type: '3BR 2BA', count: 0, rent: 0, beds: 3, baths: 2 },
-        { type: '4BR 1BA', count: 0, rent: 0, beds: 4, baths: 1 },
-        { type: '4BR 2BA', count: 0, rent: 0, beds: 4, baths: 2 }
-      ];
+    const inputs = {
+      listPrice:         document.getElementById('list-price'),
+      yearlyTax:         document.getElementById('yearly-tax'),
+      renovationCosts:   document.getElementById('renovation-costs'),
+      yearlyInsurance:   document.getElementById('yearly-insurance'),
+      vacancyRate:       document.getElementById('vacancy-rate'),
+      address:           document.getElementById('property-address'),
+      downPayment:       document.getElementById('down-payment'),
+      interestRate:      document.getElementById('interest-rate'),
+      loanTerm:          document.getElementById('loan-term'),
+      breakEvenTarget:   document.getElementById('break-even-target'),
+      waterSewerTrash:   document.getElementById('water-sewer-trash'),
+      capex:             document.getElementById('capex'),
+      repairsMaintenance:document.getElementById('repairs-maintenance')
+    };
 
-      // Add number formatting to input fields
-      Object.keys(inputs).forEach(key => {
-        if (key !== 'address') {
-          inputs[key].addEventListener('input', function(e) {
-            const cursorPos = this.selectionStart;
-            let value = this.value.replace(/[^0-9.]/g, '');
-            const decimalPointCount = (value.match(/\./g) || []).length;
-            if (decimalPointCount > 1) {
-              const firstDecimalIndex = value.indexOf('.');
-              value = value.substring(0, firstDecimalIndex + 1) +
-                     value.substring(firstDecimalIndex + 1).replace(/\./g, '');
-            }
-            if (value !== '') {
-              if (value.includes('.')) {
-                const parts = value.split('.');
-                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                value = parts.join('.');
-              } else {
-                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-              }
-            }
-            const addedChars = value.length - this.value.replace(/,/g, '').length;
-            const newCursorPos = cursorPos + (addedChars > 0 ? 1 : 0);
-            this.value = value;
-            this.setSelectionRange(newCursorPos, newCursorPos);
-            calculate();
-          });
+    const results = {
+      cashNeeded:      document.getElementById('result-cash-needed'),
+      monthlyRent:     document.getElementById('result-monthly-rent'),
+      monthlyMortgage: document.getElementById('result-monthly-mortgage'),
+      monthlyCashflow: document.getElementById('result-monthly-cashflow'),
+      yearlyCashflow:  document.getElementById('result-yearly-cashflow'),
+      cashRoi:         document.getElementById('result-cash-roi'),
+      capRate:         document.getElementById('result-cap-rate'),
+      dscr:            document.getElementById('result-dscr'),
+      breakEven:       document.getElementById('result-break-even'),
+      maxOffer:        document.getElementById('result-max-offer'),
+      pricePerUnit:    document.getElementById('result-price-per-unit'),
+      onePercent:      document.getElementById('result-one-percent')
+    };
 
-          inputs[key].addEventListener('keydown', function(e) {
-            if (e.key === 'Backspace' &&
-                (this.selectionStart === 0 && this.selectionEnd === this.value.length ||
-                 this.selectionStart === 0 && this.selectionEnd === 0)) {
-              this.value = '';
-              calculate();
-              e.preventDefault();
-            }
-          });
+    const presetUnitTypes = [
+      { type: 'Studio 1BA', count: 0, rent: 0, beds: 0, baths: 1 },
+      { type: '1BR 1BA',    count: 0, rent: 0, beds: 1, baths: 1 },
+      { type: '2BR 1BA',    count: 0, rent: 0, beds: 2, baths: 1 },
+      { type: '2BR 2BA',    count: 0, rent: 0, beds: 2, baths: 2 },
+      { type: '3BR 1BA',    count: 0, rent: 0, beds: 3, baths: 1 },
+      { type: '3BR 2BA',    count: 0, rent: 0, beds: 3, baths: 2 },
+      { type: '4BR 1BA',    count: 0, rent: 0, beds: 4, baths: 1 },
+      { type: '4BR 2BA',    count: 0, rent: 0, beds: 4, baths: 2 }
+    ];
+
+    // ── Auto-detect neighborhood when address changes ───────────────────────
+    inputs.address.addEventListener('input', function() {
+      // Only auto-fill if the neighborhood field is empty or was auto-filled
+      if (!neighborhoodInput.dataset.manualOverride) {
+        const detected = detectNeighborhood(this.value);
+        neighborhoodInput.value = detected;
+        if (detected) {
+          neighborhoodMatch.textContent = `✓ Matched: ${detected}`;
+          neighborhoodMatch.className = 'found';
+        } else {
+          neighborhoodMatch.textContent = 'No match found — type neighborhood manually';
+          neighborhoodMatch.className = this.value.length > 5 ? 'not-found' : '';
+          if (this.value.length <= 5) neighborhoodMatch.style.display = 'none';
         }
-      });
-
-      // Add preset unit types
-      presetUnitTypes.forEach(unitType => addUnitTypeToUI(unitType, true));
-
-      // Add event listeners
-      addUnitTypeButton.addEventListener('click', function() {
-        const customCount = document.querySelectorAll('.unit-type[data-custom="true"]').length;
-        const nextLetter = String.fromCharCode(65 + customCount);
-        addUnitTypeToUI({ type: `Custom ${nextLetter}`, count: 1, rent: 0, beds: 1, baths: 1 }, false);
-      });
-
-      copyResultsButton.addEventListener('click', function() {
-        copyResultsToClipboard();
-      });
-
-      const totalUnits = presetUnitTypes.reduce((sum, unit) => sum + unit.count, 0);
-      inputs.waterSewerTrash.value = formatNumber(totalUnits * 75);
-
+      }
       calculate();
-      checkForUrlParameters();
-
-      function addUnitTypeToUI(unitType, isPreset = false) {
-        const unitTypeDiv = document.createElement('div');
-        unitTypeDiv.className = 'unit-type';
-        if (isPreset) {
-          unitTypeDiv.setAttribute('data-preset', 'true');
-        } else {
-          unitTypeDiv.setAttribute('data-custom', 'true');
-        }
-
-        unitTypeDiv.innerHTML = `
-          <div class="unit-type-header">
-            <span class="unit-type-name" style="font-weight: 500;">${unitType.type}</span>
-            ${!isPreset ? '<button class="btn-danger btn-icon remove-unit">✕</button>' : ''}
-          </div>
-          <div class="unit-fields">
-            <div>
-              <label>Count</label>
-              <input type="text" value="${unitType.count}" min="0" class="unit-count" inputmode="numeric">
-            </div>
-            <div>
-              <label>Rent</label>
-              <div class="input-with-icon">
-                <span class="input-icon">$</span>
-                <input type="text" value="${unitType.rent.toLocaleString()}" min="0" class="unit-rent" inputmode="numeric">
-              </div>
-            </div>
-          </div>
-          <div class="unit-summary">
-            ${unitType.count}x ${unitType.beds}bd/${unitType.baths}ba @ $${unitType.rent.toLocaleString()}/mo = $${(unitType.count * unitType.rent).toLocaleString()}/mo total
-          </div>
-        `;
-
-        const numberInputs = unitTypeDiv.querySelectorAll('input[inputmode="numeric"]');
-        numberInputs.forEach(input => {
-          input.addEventListener('input', function() {
-            const cursorPos = this.selectionStart;
-            let value = this.value.replace(/[^0-9.]/g, '');
-            if (value !== '') {
-              if (value.includes('.')) {
-                const parts = value.split('.');
-                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                value = parts.join('.');
-              } else {
-                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-              }
-            }
-            const addedChars = value.length - this.value.replace(/,/g, '').length;
-            const newCursorPos = cursorPos + (addedChars > 0 ? 1 : 0);
-            this.value = value;
-            this.setSelectionRange(newCursorPos, newCursorPos);
-            updateUnitSummary(unitTypeDiv);
-            calculate();
-          });
-
-          input.addEventListener('keydown', function(e) {
-            if (e.key === 'Backspace' &&
-                (this.selectionStart === 0 && this.selectionEnd === this.value.length ||
-                 this.selectionStart === 0 && this.selectionEnd === 0)) {
-              this.value = '';
-              updateUnitSummary(unitTypeDiv);
-              calculate();
-              e.preventDefault();
-            }
-          });
-        });
-
-        if (!isPreset) {
-          const removeButton = unitTypeDiv.querySelector('.remove-unit');
-          removeButton.addEventListener('click', function() {
-            const customUnits = document.querySelectorAll('.unit-type[data-custom="true"]');
-            if (customUnits.length > 1) {
-              unitTypeDiv.remove();
-              calculate();
-            } else {
-              showNotification('You must keep at least one custom unit type if you add one.', 'error');
-            }
-          });
-        }
-
-        unitTypesContainer.appendChild(unitTypeDiv);
-        const totalUnits = getUnitTypes().reduce((sum, unit) => sum + unit.count, 0);
-        inputs.waterSewerTrash.value = formatNumber(totalUnits * 75);
-      }
-
-      function updateUnitSummary(unitTypeDiv) {
-        const count = parseFloat(unitTypeDiv.querySelector('.unit-count').value.replace(/,/g, '')) || 0;
-        const rent = parseFloat(unitTypeDiv.querySelector('.unit-rent').value.replace(/,/g, '')) || 0;
-        const typeSpan = unitTypeDiv.querySelector('.unit-type-name');
-        const unitType = typeSpan.textContent;
-        
-        const bedBathMatch = unitType.match(/(\d+)BR\s+(\d+(?:\.\d+)?)BA|Studio\s+(\d+(?:\.\d+)?)BA/i);
-        let beds, baths;
-        
-        if (bedBathMatch) {
-          if (bedBathMatch[3]) {
-            beds = 0;
-            baths = bedBathMatch[3];
-          } else {
-            beds = bedBathMatch[1];
-            baths = bedBathMatch[2];
-          }
-        } else {
-          beds = 0;
-          baths = 1;
-        }
-
-        const summary = `${count}x ${beds}bd/${baths}ba @ $${rent.toLocaleString()}/mo = $${(count * rent).toLocaleString()}/mo total`;
-        unitTypeDiv.querySelector('.unit-summary').textContent = summary;
-      }
-
-      function getUnitTypes() {
-        const unitTypes = [];
-        document.querySelectorAll('.unit-type').forEach(unitTypeDiv => {
-          const typeSpan = unitTypeDiv.querySelector('.unit-type-name');
-          const type = typeSpan.textContent;
-          const count = parseFloat(unitTypeDiv.querySelector('.unit-count').value.replace(/,/g, '')) || 0;
-          const rent = parseFloat(unitTypeDiv.querySelector('.unit-rent').value.replace(/,/g, '')) || 0;
-
-          const bedBathMatch = type.match(/(\d+)BR\s+(\d+(?:\.\d+)?)BA|Studio\s+(\d+(?:\.\d+)?)BA/i);
-          let beds, baths;
-          
-          if (bedBathMatch) {
-            if (bedBathMatch[3]) {
-              beds = 0;
-              baths = bedBathMatch[3];
-            } else {
-              beds = bedBathMatch[1];
-              baths = bedBathMatch[2];
-            }
-          } else {
-            beds = 0;
-            baths = 1;
-          }
-
-          if (count > 0) {
-            unitTypes.push({ type, count, beds, baths, rent });
-          }
-        });
-        return unitTypes;
-      }
-
-      function parseNumericInput(input) {
-        return parseFloat(input.value.replace(/,/g, '')) || 0;
-      }
-
-      function updateUnitRentSummary() {
-        const unitTypes = getUnitTypes();
-        const unitRentDetailsElement = document.getElementById('unit-rent-details');
-        unitRentDetailsElement.innerHTML = '';
-        
-        unitTypes.forEach(unit => {
-          const rentItem = document.createElement('div');
-          rentItem.className = 'unit-rent-item';
-          
-          const labelSpan = document.createElement('span');
-          labelSpan.className = 'unit-rent-label';
-          labelSpan.textContent = `Rent (${unit.beds}BR ${unit.baths}BA):`;
-          
-          const valueSpan = document.createElement('span');
-          valueSpan.className = 'unit-rent-value';
-          valueSpan.textContent = formatMoney(unit.rent);
-          
-          rentItem.appendChild(labelSpan);
-          rentItem.appendChild(valueSpan);
-          unitRentDetailsElement.appendChild(rentItem);
-        });
-      }
-
-      function copyResultsToClipboard() {
-        const resultsContent = document.getElementById('results-content');
-        const lines = [];
-        
-        const labels = resultsContent.querySelectorAll('.results-label:not(.hidden)');
-        const values = resultsContent.querySelectorAll('.results-value:not(.hidden)');
-        
-        labels.forEach((label, index) => {
-          const labelText = label.textContent.trim();
-          const valueText = values[index].textContent.trim();
-          lines.push(`${labelText} ${valueText}`);
-        });
-        
-        const text = lines.join('\n');
-        
-        navigator.clipboard.writeText(text).then(() => {
-          showNotification('Results copied to clipboard!', 'success');
-        }).catch(err => {
-          showNotification('Failed to copy to clipboard', 'error');
-          console.error('Copy error:', err);
-        });
-      }
-
-      function calculate() {
-        const listPrice = parseNumericInput(inputs.listPrice);
-        const yearlyTax = parseNumericInput(inputs.yearlyTax);
-        const renovationCosts = parseNumericInput(inputs.renovationCosts);
-        const yearlyInsurance = parseNumericInput(inputs.yearlyInsurance);
-        const vacancyRate = parseNumericInput(inputs.vacancyRate);
-        const downPaymentPercent = parseNumericInput(inputs.downPayment);
-        const interestRate = parseNumericInput(inputs.interestRate);
-        const loanTerm = parseNumericInput(inputs.loanTerm);
-        const breakEvenTarget = parseNumericInput(inputs.breakEvenTarget);
-        const waterSewerTrash = parseNumericInput(inputs.waterSewerTrash);
-        const capex = parseNumericInput(inputs.capex);
-        let repairsMaintenance = parseNumericInput(inputs.repairsMaintenance);
-
-        if (listPrice > 0 && (repairsMaintenance === 0 || repairsMaintenance === 100)) {
-          const defaultRepairs = listPrice * 0.0002;
-          inputs.repairsMaintenance.value = formatNumber(defaultRepairs);
-          repairsMaintenance = defaultRepairs;
-        }
-
-        const unitTypes = getUnitTypes();
-        const totalUnits = unitTypes.reduce((sum, unit) => sum + unit.count, 0);
-        const monthlyRent = unitTypes.reduce((sum, unit) => sum + (unit.count * unit.rent), 0);
-        const yearlyRent = monthlyRent * 12;
-
-        if ((waterSewerTrash === 0 || waterSewerTrash === 300) && totalUnits !== 0) {
-          const defaultWaterSewerTrash = totalUnits * 75;
-          inputs.waterSewerTrash.value = formatNumber(defaultWaterSewerTrash);
-        }
-
-        const downPayment = listPrice * (downPaymentPercent / 100);
-        const loanAmount = listPrice - downPayment;
-        const closingCosts = listPrice * 0.04;
-        const cashNeeded = downPayment + closingCosts + renovationCosts;
-
-        const monthlyInterestRate = interestRate / 100 / 12;
-        const numPayments = loanTerm * 12;
-        let monthlyMortgage = 0;
-
-        if (monthlyInterestRate > 0) {
-          monthlyMortgage = loanAmount *
-            (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numPayments)) /
-            (Math.pow(1 + monthlyInterestRate, numPayments) - 1);
-        } else {
-          monthlyMortgage = loanAmount / numPayments;
-        }
-
-        const effectiveMonthlyRent = monthlyRent * (1 - vacancyRate / 100);
-        const effectiveYearlyRent = effectiveMonthlyRent * 12;
-
-        const monthlyTax = yearlyTax / 12;
-        const monthlyInsurance = yearlyInsurance / 12;
-        const monthlyExpenses = monthlyTax + monthlyInsurance + waterSewerTrash + capex + repairsMaintenance;
-        const yearlyExpenses = monthlyExpenses * 12;
-
-        const noi = effectiveYearlyRent - yearlyExpenses;
-        const yearlyMortgage = monthlyMortgage * 12;
-        const dscr = yearlyMortgage > 0 ? noi / yearlyMortgage : 0;
-
-        const monthlyCashflow = effectiveMonthlyRent - monthlyExpenses - monthlyMortgage;
-        const yearlyCashflow = monthlyCashflow * 12;
-
-        const breakEvenYears = yearlyCashflow > 0 ? cashNeeded / yearlyCashflow : 0;
-
-        let cashRoi = 0;
-        if (cashNeeded > 0 && yearlyCashflow > 0 && breakEvenYears > 0) {
-          cashRoi = (Math.pow(1 + 1, 1/breakEvenYears) - 1) * 100;
-        }
-
-        const capRate = listPrice > 0 ? (noi / listPrice) * 100 : 0;
-        const pricePerUnit = totalUnits > 0 ? listPrice / totalUnits : 0;
-        const onePercentRule = listPrice > 0 ? (monthlyRent / listPrice) * 100 : 0;
-
-        let maxOfferPrice = 0;
-        if (yearlyCashflow > 0) {
-          let testPrice = listPrice * 2;
-          const step = 10000;
-          let testBreakEven = Infinity;
-
-          while (testBreakEven > breakEvenTarget && testPrice > 0) {
-            const testDownPayment = testPrice * (downPaymentPercent / 100);
-            const testLoanAmount = testPrice - testDownPayment;
-            const testClosingCosts = testPrice * 0.04;
-            const testCashNeeded = testDownPayment + testClosingCosts + renovationCosts;
-
-            let testMonthlyMortgage = 0;
-            if (monthlyInterestRate > 0) {
-              testMonthlyMortgage = testLoanAmount *
-                (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numPayments)) /
-                (Math.pow(1 + monthlyInterestRate, numPayments) - 1);
-            } else {
-              testMonthlyMortgage = testLoanAmount / numPayments;
-            }
-
-            const testYearlyTax = yearlyTax * (testPrice / listPrice);
-            const testRepairsMaintenance = testPrice * 0.0002;
-            const testMonthlyExpenses =
-              (testYearlyTax / 12) + monthlyInsurance + waterSewerTrash +
-              capex + testRepairsMaintenance;
-
-            const testMonthlyCashflow = effectiveMonthlyRent - testMonthlyExpenses - testMonthlyMortgage;
-            const testYearlyCashflow = testMonthlyCashflow * 12;
-
-            testBreakEven = testYearlyCashflow > 0 ? testCashNeeded / testYearlyCashflow : Infinity;
-
-            if (testBreakEven > breakEvenTarget) {
-              testPrice -= step;
-            } else {
-              break;
-            }
-          }
-
-          maxOfferPrice = testPrice > 0 ? testPrice : 0;
-        }
-
-        results.cashNeeded.textContent = formatMoney(cashNeeded);
-        results.monthlyRent.textContent = formatMoney(monthlyRent);
-        results.monthlyMortgage.textContent = formatMoney(monthlyMortgage);
-        results.monthlyCashflow.textContent = formatMoney(monthlyCashflow);
-        results.yearlyCashflow.textContent = formatMoney(yearlyCashflow);
-        results.cashRoi.textContent = formatPercent(cashRoi);
-        results.capRate.textContent = formatPercent(capRate);
-        results.dscr.textContent = formatNumber(dscr);
-        results.breakEven.textContent = formatTime(breakEvenYears);
-        results.maxOffer.textContent = formatMoney(maxOfferPrice);
-        results.pricePerUnit.textContent = formatMoney(pricePerUnit);
-        results.onePercent.textContent = formatPercent(onePercentRule);
-
-        applyColorClass(results.monthlyCashflow, monthlyCashflow);
-        applyColorClass(results.yearlyCashflow, yearlyCashflow);
-        applyColorClass(results.cashRoi, cashRoi);
-        applyColorClass(results.dscr, dscr, 1.25, 1);
-        applyColorClass(results.onePercent, onePercentRule, 1);
-        
-        updateUnitRentSummary();
-      }
-
-      function formatMoney(value) {
-        return '$' + value.toLocaleString('en-US', { maximumFractionDigits: 0 });
-      }
-
-      function formatPercent(value) {
-        return value.toFixed(2) + '%';
-      }
-
-      function formatNumber(value) {
-        return value.toLocaleString('en-US');
-      }
-
-      function formatTime(years) {
-        const fullYears = Math.floor(years);
-        const months = Math.round((years - fullYears) * 12);
-        return `${fullYears}y ${months}m`;
-      }
-
-      function applyColorClass(element, value, goodThreshold = 0, warningThreshold = null) {
-        element.classList.remove('positive', 'negative', 'warning');
-
-        if (value >= goodThreshold) {
-          element.classList.add('positive');
-        } else if (warningThreshold !== null && value >= warningThreshold) {
-          element.classList.add('warning');
-        } else {
-          element.classList.add('negative');
-        }
-      }
-
-      function showNotification(message, type = 'success') {
-        const notificationDiv = document.getElementById('notification');
-        notificationDiv.textContent = message;
-        notificationDiv.className = `notification ${type}`;
-        notificationDiv.classList.remove('hidden');
-
-        setTimeout(() => {
-          notificationDiv.classList.add('hidden');
-        }, 5000);
-      }
-
-      function checkForUrlParameters() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const dataParam = urlParams.get('data');
-
-        if (dataParam) {
-          try {
-            const data = JSON.parse(decodeURIComponent(dataParam));
-            populateCalculator(data);
-            showNotification('Data imported successfully from MLS listing!');
-          } catch (error) {
-            console.error('Error parsing data from URL:', error);
-            showNotification('Failed to import data from URL parameters.', 'error');
-          }
-        }
-      }
-
-      function populateCalculator(data) {
-        if (data.listPrice) {
-          inputs.listPrice.value = formatNumber(data.listPrice);
-        }
-        
-        if (data.yearlyTax) inputs.yearlyTax.value = formatNumber(data.yearlyTax);
-        if (data.yearlyInsurance) inputs.yearlyInsurance.value = formatNumber(data.yearlyInsurance);
-        
-        if (data.address) {
-          let cleanAddress = data.address;
-          cleanAddress = cleanAddress.split('\n')
-            .filter(line => !line.includes('$'))
-            .join(', ')
-            .replace(/,\s*,/g, ',')
-            .trim();
-          
-          cleanAddress = cleanAddress.replace(/\s{2,}/g, ' ');
-          cleanAddress = cleanAddress.replace(/([A-Z][a-z]+)(\s*,\s*)([A-Z]{2})(\s*)(\d{5})/, '$1$2 $3 $5');
-          
-          inputs.address.value = cleanAddress;
-        }
-
-        // Update existing preset units with data from extension
-        if (data.units && data.units.length > 0) {
-          const presetUnitDivs = document.querySelectorAll('.unit-type[data-preset="true"]');
-          
-          presetUnitDivs.forEach(unitDiv => {
-            const unitTypeName = unitDiv.querySelector('.unit-type-name').textContent;
-            const matchingUnit = data.units.find(u => u.type === unitTypeName);
-            
-            if (matchingUnit) {
-              unitDiv.querySelector('.unit-count').value = matchingUnit.count || 0;
-              unitDiv.querySelector('.unit-rent').value = formatNumber(matchingUnit.rent || 0);
-              updateUnitSummary(unitDiv);
-            }
-          });
-        }
-
-        calculate();
-      }
     });
+
+    neighborhoodInput.addEventListener('input', function() {
+      neighborhoodInput.dataset.manualOverride = this.value ? 'true' : '';
+      neighborhoodMatch.style.display = 'none';
+    });
+
+    // ── Number input formatting ────────────────────────────────────────────
+    Object.keys(inputs).forEach(key => {
+      if (key === 'address') return;
+      inputs[key].addEventListener('input', function(e) {
+        const cursorPos = this.selectionStart;
+        let value = this.value.replace(/[^0-9.]/g, '');
+        const decimalCount = (value.match(/\./g) || []).length;
+        if (decimalCount > 1) {
+          const first = value.indexOf('.');
+          value = value.substring(0, first + 1) + value.substring(first + 1).replace(/\./g, '');
+        }
+        if (value !== '') {
+          if (value.includes('.')) {
+            const parts = value.split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            value = parts.join('.');
+          } else {
+            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+          }
+        }
+        const addedChars = value.length - this.value.replace(/,/g, '').length;
+        this.value = value;
+        this.setSelectionRange(cursorPos + (addedChars > 0 ? 1 : 0), cursorPos + (addedChars > 0 ? 1 : 0));
+        calculate();
+      });
+      inputs[key].addEventListener('keydown', function(e) {
+        if (e.key === 'Backspace' && this.selectionStart === 0) {
+          this.value = ''; calculate(); e.preventDefault();
+        }
+      });
+    });
+
+    presetUnitTypes.forEach(u => addUnitTypeToUI(u, true));
+    addUnitTypeButton.addEventListener('click', function() {
+      const count = document.querySelectorAll('.unit-type[data-custom="true"]').length;
+      addUnitTypeToUI({ type: `Custom ${String.fromCharCode(65+count)}`, count:1, rent:0, beds:1, baths:1 }, false);
+    });
+
+    // ── COPY ROW — tab-separated for Google Sheets paste ──────────────────
+    copyResultsButton.addEventListener('click', function() {
+      const address     = inputs.address.value.trim();
+      const neighborhood = neighborhoodInput.value.trim();
+
+      // Raw numeric values for clean paste
+      const cashRoiRaw    = parseRawPercent(results.cashRoi.textContent);
+      const cashflowRaw   = parseRawMoney(results.yearlyCashflow.textContent);
+      const breakEvenRaw  = parseRawBreakEven(results.breakEven.textContent);
+      const cashNeededRaw = parseRawMoney(results.cashNeeded.textContent);
+      const dscrRaw       = parseFloat(results.dscr.textContent) || 0;
+      const capRateRaw    = parseRawPercent(results.capRate.textContent);
+
+      // Tab-separated row: Address | Neighborhood | CashROI | Cashflow | BreakEven | CashNeeded | DSCR | CapRate
+      // Matches spreadsheet columns B–I exactly
+      const row = [
+        address,
+        neighborhood,
+        cashRoiRaw,
+        cashflowRaw,
+        breakEvenRaw,
+        cashNeededRaw,
+        dscrRaw,
+        capRateRaw
+      ].join('\t');
+
+      navigator.clipboard.writeText(row).then(() => {
+        showNotification('✓ Row copied! Click cell B in an empty sheet row and paste.', 'success');
+      }).catch(() => {
+        showNotification('Failed to copy — try again', 'error');
+      });
+    });
+
+    inputs.waterSewerTrash.value = formatNumber(presetUnitTypes.reduce((s,u) => s+u.count,0) * 75);
+    calculate();
+    checkForUrlParameters();
+
+    // ── Helpers ────────────────────────────────────────────────────────────
+    function parseRawMoney(str) {
+      return parseFloat(str.replace(/[$,]/g, '')) || 0;
+    }
+    function parseRawPercent(str) {
+      // Return decimal: "10.40%" → 0.104
+      return (parseFloat(str.replace('%','')) || 0) / 100;
+    }
+    function parseRawBreakEven(str) {
+      // "7y 0m" → 7.0
+      const m = str.match(/(\d+)y\s*(\d+)m/);
+      if (m) return parseFloat(m[1]) + parseFloat(m[2])/12;
+      return 0;
+    }
+
+    function addUnitTypeToUI(unitType, isPreset=false) {
+      const unitTypeDiv = document.createElement('div');
+      unitTypeDiv.className = 'unit-type';
+      unitTypeDiv.setAttribute(isPreset ? 'data-preset' : 'data-custom', 'true');
+      unitTypeDiv.innerHTML = `
+        <div class="unit-type-header">
+          <span class="unit-type-name" style="font-weight:500">${unitType.type}</span>
+          ${!isPreset ? '<button class="btn-danger btn-icon remove-unit">✕</button>' : ''}
+        </div>
+        <div class="unit-fields">
+          <div><label>Count</label><input type="text" value="${unitType.count}" class="unit-count" inputmode="numeric"></div>
+          <div><label>Rent</label><div class="input-with-icon"><span class="input-icon">$</span><input type="text" value="${unitType.rent.toLocaleString()}" class="unit-rent" inputmode="numeric"></div></div>
+        </div>
+        <div class="unit-summary">${unitType.count}x ${unitType.beds}bd/${unitType.baths}ba @ $${unitType.rent.toLocaleString()}/mo = $${(unitType.count*unitType.rent).toLocaleString()}/mo total</div>
+      `;
+      unitTypeDiv.querySelectorAll('input[inputmode="numeric"]').forEach(input => {
+        input.addEventListener('input', function() {
+          let value = this.value.replace(/[^0-9.]/g, '');
+          if (value) value = value.includes('.') ?
+            value.split('.').map((p,i) => i===0 ? p.replace(/\B(?=(\d{3})+(?!\d))/g,',') : p).join('.') :
+            value.replace(/\B(?=(\d{3})+(?!\d))/g,',');
+          this.value = value;
+          updateUnitSummary(unitTypeDiv);
+          calculate();
+        });
+      });
+      if (!isPreset) {
+        unitTypeDiv.querySelector('.remove-unit').addEventListener('click', function() {
+          if (document.querySelectorAll('.unit-type[data-custom="true"]').length > 1) {
+            unitTypeDiv.remove(); calculate();
+          } else {
+            showNotification('Keep at least one custom unit type.', 'error');
+          }
+        });
+      }
+      unitTypesContainer.appendChild(unitTypeDiv);
+      inputs.waterSewerTrash.value = formatNumber(getUnitTypes().reduce((s,u)=>s+u.count,0)*75);
+    }
+
+    function updateUnitSummary(div) {
+      const count = parseFloat(div.querySelector('.unit-count').value.replace(/,/g,'')) || 0;
+      const rent  = parseFloat(div.querySelector('.unit-rent').value.replace(/,/g,''))  || 0;
+      const type  = div.querySelector('.unit-type-name').textContent;
+      const m = type.match(/(\d+)BR\s+(\d+(?:\.\d+)?)BA|Studio\s+(\d+(?:\.\d+)?)BA/i);
+      const beds = m ? (m[3] ? 0 : m[1]) : 0;
+      const baths= m ? (m[3] || m[2]) : 1;
+      div.querySelector('.unit-summary').textContent =
+        `${count}x ${beds}bd/${baths}ba @ $${rent.toLocaleString()}/mo = $${(count*rent).toLocaleString()}/mo total`;
+    }
+
+    function getUnitTypes() {
+      return [...document.querySelectorAll('.unit-type')].map(div => {
+        const type  = div.querySelector('.unit-type-name').textContent;
+        const count = parseFloat(div.querySelector('.unit-count').value.replace(/,/g,'')) || 0;
+        const rent  = parseFloat(div.querySelector('.unit-rent').value.replace(/,/g,''))  || 0;
+        const m = type.match(/(\d+)BR\s+(\d+(?:\.\d+)?)BA|Studio\s+(\d+(?:\.\d+)?)BA/i);
+        return { type, count, rent,
+          beds:  m ? (m[3] ? 0 : m[1]) : 0,
+          baths: m ? (m[3] || m[2]) : 1
+        };
+      }).filter(u => u.count > 0);
+    }
+
+    function parseNumericInput(input) {
+      return parseFloat(input.value.replace(/,/g,'')) || 0;
+    }
+
+    function updateUnitRentSummary() {
+      const el = document.getElementById('unit-rent-details');
+      el.innerHTML = '';
+      getUnitTypes().forEach(unit => {
+        const item = document.createElement('div');
+        item.className = 'unit-rent-item';
+        item.innerHTML = `<span class="unit-rent-label">Rent (${unit.beds}BR ${unit.baths}BA):</span><span class="unit-rent-value">${formatMoney(unit.rent)}</span>`;
+        el.appendChild(item);
+      });
+    }
+
+    function calculate() {
+      const listPrice          = parseNumericInput(inputs.listPrice);
+      const yearlyTax          = parseNumericInput(inputs.yearlyTax);
+      const renovationCosts    = parseNumericInput(inputs.renovationCosts);
+      const yearlyInsurance    = parseNumericInput(inputs.yearlyInsurance);
+      const vacancyRate        = parseNumericInput(inputs.vacancyRate);
+      const downPaymentPercent = parseNumericInput(inputs.downPayment);
+      const interestRate       = parseNumericInput(inputs.interestRate);
+      const loanTerm           = parseNumericInput(inputs.loanTerm);
+      const breakEvenTarget    = parseNumericInput(inputs.breakEvenTarget);
+      const waterSewerTrash    = parseNumericInput(inputs.waterSewerTrash);
+      const capex              = parseNumericInput(inputs.capex);
+      let   repairsMaintenance = parseNumericInput(inputs.repairsMaintenance);
+
+      if (listPrice > 0 && (repairsMaintenance === 0 || repairsMaintenance === 100)) {
+        repairsMaintenance = listPrice * 0.0002;
+        inputs.repairsMaintenance.value = formatNumber(repairsMaintenance);
+      }
+
+      const unitTypes    = getUnitTypes();
+      const totalUnits   = unitTypes.reduce((s,u) => s+u.count, 0);
+      const monthlyRent  = unitTypes.reduce((s,u) => s+(u.count*u.rent), 0);
+
+      if ((parseNumericInput(inputs.waterSewerTrash) === 0 || parseNumericInput(inputs.waterSewerTrash) === 300) && totalUnits !== 0) {
+        inputs.waterSewerTrash.value = formatNumber(totalUnits*75);
+      }
+
+      const downPayment   = listPrice * (downPaymentPercent/100);
+      const loanAmount    = listPrice - downPayment;
+      const closingCosts  = listPrice * 0.04;
+      const cashNeeded    = downPayment + closingCosts + renovationCosts;
+
+      const monthlyInterestRate = interestRate/100/12;
+      const numPayments         = loanTerm*12;
+      const monthlyMortgage     = monthlyInterestRate > 0
+        ? loanAmount*(monthlyInterestRate*Math.pow(1+monthlyInterestRate,numPayments))/(Math.pow(1+monthlyInterestRate,numPayments)-1)
+        : loanAmount/numPayments;
+
+      const effectiveMonthlyRent = monthlyRent*(1-vacancyRate/100);
+      const effectiveYearlyRent  = effectiveMonthlyRent*12;
+      const monthlyTax           = yearlyTax/12;
+      const monthlyInsurance     = yearlyInsurance/12;
+      const monthlyExpenses      = monthlyTax+monthlyInsurance+waterSewerTrash+capex+repairsMaintenance;
+      const yearlyExpenses       = monthlyExpenses*12;
+      const noi                  = effectiveYearlyRent-yearlyExpenses;
+      const yearlyMortgage       = monthlyMortgage*12;
+      const dscr                 = yearlyMortgage > 0 ? noi/yearlyMortgage : 0;
+      const monthlyCashflow      = effectiveMonthlyRent-monthlyExpenses-monthlyMortgage;
+      const yearlyCashflow       = monthlyCashflow*12;
+      const breakEvenYears       = yearlyCashflow > 0 ? cashNeeded/yearlyCashflow : 0;
+      const cashRoi              = (cashNeeded > 0 && yearlyCashflow > 0 && breakEvenYears > 0)
+        ? (Math.pow(2, 1/breakEvenYears)-1)*100 : 0;
+      const capRate              = listPrice > 0 ? (noi/listPrice)*100 : 0;
+      const pricePerUnit         = totalUnits > 0 ? listPrice/totalUnits : 0;
+      const onePercentRule       = listPrice > 0 ? (monthlyRent/listPrice)*100 : 0;
+
+      let maxOfferPrice = 0;
+      if (yearlyCashflow > 0) {
+        let testPrice = listPrice*2;
+        while (testPrice > 0) {
+          const td = testPrice*(downPaymentPercent/100);
+          const tl = testPrice-td;
+          const tc = testPrice*0.04;
+          const tCash = td+tc+renovationCosts;
+          const tMort = monthlyInterestRate > 0
+            ? tl*(monthlyInterestRate*Math.pow(1+monthlyInterestRate,numPayments))/(Math.pow(1+monthlyInterestRate,numPayments)-1)
+            : tl/numPayments;
+          const tExp  = (yearlyTax*(testPrice/listPrice)/12)+monthlyInsurance+waterSewerTrash+capex+(testPrice*0.0002);
+          const tFlow = (effectiveMonthlyRent-tExp-tMort)*12;
+          const tBE   = tFlow > 0 ? tCash/tFlow : Infinity;
+          if (tBE > breakEvenTarget) testPrice -= 10000;
+          else break;
+        }
+        maxOfferPrice = testPrice > 0 ? testPrice : 0;
+      }
+
+      results.cashNeeded.textContent      = formatMoney(cashNeeded);
+      results.monthlyRent.textContent     = formatMoney(monthlyRent);
+      results.monthlyMortgage.textContent = formatMoney(monthlyMortgage);
+      results.monthlyCashflow.textContent = formatMoney(monthlyCashflow);
+      results.yearlyCashflow.textContent  = formatMoney(yearlyCashflow);
+      results.cashRoi.textContent         = formatPercent(cashRoi);
+      results.capRate.textContent         = formatPercent(capRate);
+      results.dscr.textContent            = formatNumber(dscr);
+      results.breakEven.textContent       = formatTime(breakEvenYears);
+      results.maxOffer.textContent        = formatMoney(maxOfferPrice);
+      results.pricePerUnit.textContent    = formatMoney(pricePerUnit);
+      results.onePercent.textContent      = formatPercent(onePercentRule);
+
+      applyColorClass(results.monthlyCashflow, monthlyCashflow);
+      applyColorClass(results.yearlyCashflow,  yearlyCashflow);
+      applyColorClass(results.cashRoi,         cashRoi);
+      applyColorClass(results.dscr,            dscr, 1.25, 1);
+      applyColorClass(results.onePercent,      onePercentRule, 1);
+      updateUnitRentSummary();
+    }
+
+    function formatMoney(v)   { return '$'+v.toLocaleString('en-US',{maximumFractionDigits:0}); }
+    function formatPercent(v) { return v.toFixed(2)+'%'; }
+    function formatNumber(v)  { return v.toLocaleString('en-US'); }
+    function formatTime(y) {
+      const fy = Math.floor(y), m = Math.round((y-fy)*12);
+      return `${fy}y ${m}m`;
+    }
+    function applyColorClass(el, val, good=0, warn=null) {
+      el.classList.remove('positive','negative','warning');
+      if (val >= good) el.classList.add('positive');
+      else if (warn !== null && val >= warn) el.classList.add('warning');
+      else el.classList.add('negative');
+    }
+    function showNotification(msg, type='success') {
+      notification.textContent = msg;
+      notification.className = `notification ${type}`;
+      notification.classList.remove('hidden');
+      setTimeout(() => notification.classList.add('hidden'), 5000);
+    }
+    function checkForUrlParameters() {
+      const dataParam = new URLSearchParams(window.location.search).get('data');
+      if (!dataParam) return;
+      try {
+        populateCalculator(JSON.parse(decodeURIComponent(dataParam)));
+        showNotification('Data imported from listing!');
+      } catch(e) {
+        showNotification('Failed to import URL data.','error');
+      }
+    }
+    function populateCalculator(data) {
+      if (data.listPrice)     inputs.listPrice.value     = formatNumber(data.listPrice);
+      if (data.yearlyTax)     inputs.yearlyTax.value     = formatNumber(data.yearlyTax);
+      if (data.yearlyInsurance) inputs.yearlyInsurance.value = formatNumber(data.yearlyInsurance);
+      if (data.address) {
+        let addr = data.address.split('\n').filter(l=>!l.includes('$')).join(', ').replace(/,\s*,/g,',').trim();
+        inputs.address.value = addr;
+        const detected = detectNeighborhood(addr);
+        if (detected) { neighborhoodInput.value = detected; }
+      }
+      if (data.units?.length) {
+        document.querySelectorAll('.unit-type[data-preset="true"]').forEach(div => {
+          const name = div.querySelector('.unit-type-name').textContent;
+          const match = data.units.find(u => u.type === name);
+          if (match) {
+            div.querySelector('.unit-count').value = match.count||0;
+            div.querySelector('.unit-rent').value  = formatNumber(match.rent||0);
+            updateUnitSummary(div);
+          }
+        });
+      }
+      calculate();
+    }
+  });
   </script>
 </body>
 </html>
