@@ -265,11 +265,47 @@
   ];
 
   // Try to find a neighborhood from an address string
+  // ── ZIP → Neighborhood for Chicago addresses ──────────────────────────────
+  const ZIP_TO_NEIGHBORHOOD = {
+    // Armour Square / Bridgeport / Lower West Side / Chinatown area
+    "60609": "Armour Square", "60616": "Armour Square", "60608": "Lower West Side",
+    "60632": "Garfield Ridge", "60629": "Garfield Ridge",
+    // Logan Square / Irving Park / Humboldt Park / Belmont Cragin
+    "60647": "Logan Square", "60618": "Irving Park", "60641": "Irving Park",
+    "60651": "Humboldt Park", "60639": "Belmont Cragin", "60634": "Belmont Cragin",
+    "60630": "Jefferson Park", "60631": "Norwood Park", "60656": "O'Hare",
+    "60646": "North Park", "60645": "West Ridge",
+    // Uptown / Rogers Park / North Center / Lincoln Square
+    "60640": "Uptown", "60626": "Rogers Park", "60625": "North Center",
+    "60613": "North Center", "60660": "Uptown",
+    // Hyde Park / Kenwood / Oakland / Bronzeville
+    "60615": "Hyde Park", "60637": "Hyde Park", "60653": "Kenwood", "60619": "Calumet Heights",
+    // Morgan Park / Beverly / Washington Heights / Mount Greenwood
+    "60643": "Morgan Park", "60655": "Mount Greenwood", "60620": "Washington Heights",
+    // Near North / West Town / Near West Side
+    "60610": "Near North Side", "60611": "Near North Side",
+    "60622": "West Town", "60612": "Near West Side", "60607": "Near West Side",
+    // Portage Park / Hermosa / Edison Park / Forest Glen
+    "60641": "Portage Park", "60614": "North Center", "60657": "North Center",
+    "60631": "Edison Park", "60646": "Forest Glen",
+    // South Chicago / Hegewisch / Calumet Heights
+    "60617": "Hegewisch", "60633": "Hegewisch", "60628": "Calumet Heights",
+    // Lower West Side / Armour Square
+    "60623": "Humboldt Park", "60624": "Humboldt Park",
+  };
+
   function detectNeighborhood(address) {
     if (!address) return '';
-    // Normalize: remove commas so "Matteson, IL" matches "Matteson IL"
+
+    // 1. Try ZIP code lookup first (most reliable for Chicago addresses)
+    const zipMatch = address.match(/(\d{5})/);
+    if (zipMatch) {
+      const neighborhood = ZIP_TO_NEIGHBORHOOD[zipMatch[1]];
+      if (neighborhood) return neighborhood;
+    }
+
+    // 2. Fall back to suburb name match (strips commas so "Matteson, IL" → "Matteson IL")
     const lower = address.toLowerCase().replace(/,/g, '');
-    // Sort longer names first so "Logan Square" beats "Logan"
     const sorted = [...NEIGHBORHOODS].sort((a, b) => b.length - a.length);
     for (const n of sorted) {
       if (lower.includes(n.toLowerCase())) return n;
