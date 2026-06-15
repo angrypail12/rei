@@ -267,7 +267,8 @@
   // Try to find a neighborhood from an address string
   function detectNeighborhood(address) {
     if (!address) return '';
-    const lower = address.toLowerCase();
+    // Normalize: remove commas so "Matteson, IL" matches "Matteson IL"
+    const lower = address.toLowerCase().replace(/,/g, '');
     // Sort longer names first so "Logan Square" beats "Logan"
     const sorted = [...NEIGHBORHOODS].sort((a, b) => b.length - a.length);
     for (const n of sorted) {
