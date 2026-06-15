@@ -719,7 +719,14 @@
         let addr = data.address.split('\n').filter(l=>!l.includes('$')).join(', ').replace(/,\s*,/g,',').trim();
         inputs.address.value = addr;
         const detected = detectNeighborhood(addr);
-        if (detected) { neighborhoodInput.value = detected; }
+        if (detected) {
+          neighborhoodInput.value = detected;
+          neighborhoodMatch.textContent = `✓ Matched: ${detected}`;
+          neighborhoodMatch.className = 'found';
+        } else {
+          neighborhoodMatch.textContent = 'No match found — type neighborhood manually';
+          neighborhoodMatch.className = 'not-found';
+        }
       }
       if (data.units?.length) {
         document.querySelectorAll('.unit-type[data-preset="true"]').forEach(div => {
