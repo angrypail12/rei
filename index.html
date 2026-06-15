@@ -396,24 +396,28 @@
 
     // ── Auto-detect neighborhood when address changes ───────────────────────
     inputs.address.addEventListener('input', function() {
-      // Only auto-fill if the neighborhood field is empty or was auto-filled
+      // Only auto-detect if user hasn't manually typed a neighborhood
       if (!neighborhoodInput.dataset.manualOverride) {
         const detected = detectNeighborhood(this.value);
         neighborhoodInput.value = detected;
         if (detected) {
-          neighborhoodMatch.textContent = `✓ Matched: ${detected}`;
+          neighborhoodMatch.textContent = '✓ Matched: ' + detected;
           neighborhoodMatch.className = 'found';
-        } else {
+          neighborhoodMatch.style.display = 'block';
+        } else if (this.value.length > 5) {
           neighborhoodMatch.textContent = 'No match found — type neighborhood manually';
-          neighborhoodMatch.className = this.value.length > 5 ? 'not-found' : '';
-          if (this.value.length <= 5) neighborhoodMatch.style.display = 'none';
+          neighborhoodMatch.className = 'not-found';
+          neighborhoodMatch.style.display = 'block';
+        } else {
+          neighborhoodMatch.style.display = 'none';
         }
       }
       calculate();
     });
 
     neighborhoodInput.addEventListener('input', function() {
-      neighborhoodInput.dataset.manualOverride = this.value ? 'true' : '';
+      // Mark as manual so address changes don't overwrite it
+      neighborhoodInput.dataset.manualOverride = this.value ? '1' : '';
       neighborhoodMatch.style.display = 'none';
     });
 
