@@ -466,15 +466,19 @@
       const neighborhood = neighborhoodInput.value.trim();
 
       // Raw numeric values for clean paste
-      const cashRoiRaw    = parseRawPercent(results.cashRoi.textContent);
-      const cashflowRaw   = parseRawMoney(results.yearlyCashflow.textContent);
-      const breakEvenRaw  = parseRawBreakEven(results.breakEven.textContent);
-      const cashNeededRaw = parseRawMoney(results.cashNeeded.textContent);
-      const dscrRaw       = parseFloat(results.dscr.textContent) || 0;
-      const capRateRaw    = parseRawPercent(results.capRate.textContent);
+      const cashRoiRaw      = parseRawPercent(results.cashRoi.textContent);
+      const cashflowRaw     = parseRawMoney(results.yearlyCashflow.textContent);
+      const breakEvenRaw    = parseRawBreakEven(results.breakEven.textContent);
+      const cashNeededRaw   = parseRawMoney(results.cashNeeded.textContent);
+      const dscrRaw         = parseFloat(results.dscr.textContent) || 0;
+      const capRateRaw      = parseRawPercent(results.capRate.textContent);
+      const listPriceRaw    = parseNumericInput(inputs.listPrice);
+      const downPaymentRaw  = parseNumericInput(inputs.downPayment) / 100;
+      const interestRateRaw = parseNumericInput(inputs.interestRate) / 100;
+      const loanTermRaw     = parseNumericInput(inputs.loanTerm);
 
-      // Tab-separated row: Address | Neighborhood | CashROI | Cashflow | BreakEven | CashNeeded | DSCR | CapRate
-      // Matches spreadsheet columns B–I exactly
+      // Tab-separated row — matches spreadsheet columns B–L exactly:
+      // Address | Neighborhood | CashROI | Cashflow | BreakEven | CashNeeded | DSCR | CapRate | ListPrice | DownPmt% | IntRate% | LoanTerm
       const row = [
         address,
         neighborhood,
@@ -483,7 +487,11 @@
         breakEvenRaw,
         cashNeededRaw,
         dscrRaw,
-        capRateRaw
+        capRateRaw,
+        listPriceRaw,
+        downPaymentRaw,
+        interestRateRaw,
+        loanTermRaw
       ].join('\t');
 
       navigator.clipboard.writeText(row).then(() => {
